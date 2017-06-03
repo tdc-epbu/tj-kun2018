@@ -13,6 +13,8 @@ import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import jp.co.tdc.epbu.tjkun.device.EV3;
+
 /**
  * PC との通信制御タスク。
  */
@@ -77,7 +79,11 @@ public class RemoteTask implements Runnable {
                     remoteCommand = dataInputStream.readInt();
                 }
 
-                dataOutputStream.writeInt(999);
+                // 送りたいデータのバイト配列を作成する。
+                dataOutputStream.writeFloat(EV3.getInstance().getBrightness());
+
+
+                // 作成したたバイト配列を送る。　dataOutputStream.write(b);
             }
         } catch (IOException ex) {
             ex.printStackTrace();

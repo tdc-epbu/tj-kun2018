@@ -19,6 +19,10 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 /**
  *
@@ -43,6 +47,9 @@ public class RemoteClient extends Frame implements KeyListener, Runnable {
 
     private DataInputStream inStream;
 
+	private static ScheduledExecutorService scheduler;
+	private static ScheduledFuture<?> log;
+
     public RemoteClient(String title, String ip) {
         super(title);
         this.setSize(400, 300);
@@ -56,13 +63,16 @@ public class RemoteClient extends Frame implements KeyListener, Runnable {
         buildGUI(ip);
         this.setVisible(true);
         btnConnect.addKeyListener(this);
+
     }
 
     public static void main(String args[]) {
         String ip = EV3_IPADDR;
         if (args.length > 0) ip = args[0];
         System.out.println("Starting Client...");
-        new RemoteClient("LeJOS EV3 Client Sample", ip);
+        RemoteClient obj = new RemoteClient("LeJOS EV3 Client Sample", ip);
+		scheduler = Executors.newScheduledThreadPool(2);
+        log = scheduler.scheduleAtFixedRate(obj, 0, 1000, TimeUnit.MILLISECONDS);
     }
 
     public void buildGUI(String ip) {
@@ -106,6 +116,8 @@ public class RemoteClient extends Frame implements KeyListener, Runnable {
                     inStream = new DataInputStream(socket.getInputStream());
                     messages.setText("status: CONNECTED");
                     btnConnect.setLabel("Disconnect");
+
+
                 } catch (Exception exc) {
                     messages.setText("status: FAILURE Error establishing connection with EV3.");
                     System.out.println("Error" + exc);
@@ -138,16 +150,23 @@ public class RemoteClient extends Frame implements KeyListener, Runnable {
 
     @Override
     public void run() {
-            while(true) {
+
+
+            	if(inStream == null) {
+                    System.out.println("xxx");
+            		return;
+            	}
+
                 try {
                     if (inStream.available() > 0) {
-                        System.out.println(inStream.readInt());
+                        System.out.println(inStream.readFloat());
+                        // 送られてきたバイト配列から各値を取り出して表示。
                     }
                 } catch (IOException e) {
                     // TODO 自動生成された catch ブロック
                     e.printStackTrace();
                 }
-            }
+
 
     }
 }
