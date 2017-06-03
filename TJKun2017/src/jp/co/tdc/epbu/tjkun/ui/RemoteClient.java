@@ -72,7 +72,7 @@ public class RemoteClient extends Frame implements KeyListener, Runnable {
         System.out.println("Starting Client...");
         RemoteClient obj = new RemoteClient("LeJOS EV3 Client Sample", ip);
 		scheduler = Executors.newScheduledThreadPool(2);
-        log = scheduler.scheduleAtFixedRate(obj, 0, 1000, TimeUnit.MILLISECONDS);
+        log = scheduler.scheduleAtFixedRate(obj, 0, 500, TimeUnit.MILLISECONDS);
     }
 
     public void buildGUI(String ip) {
