@@ -6,8 +6,10 @@
 package jp.co.tdc.epbu.tjkun.sample;
 
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -25,6 +27,11 @@ public class RemoteTask implements Runnable {
     private InputStream     inputStream;
     private DataInputStream dataInputStream;
     private int             remoteCommand;
+
+    private OutputStream    outputStream;
+    private DataOutputStream dataOutputStream;
+
+
 
 
     private static RemoteTask remoteTask = null;
@@ -61,15 +68,22 @@ public class RemoteTask implements Runnable {
                 client = server.accept();
                 inputStream = client.getInputStream();
                 dataInputStream = new DataInputStream(inputStream);
+
+                outputStream = client.getOutputStream();
+                dataOutputStream = new DataOutputStream(outputStream);
+
             } else {
                 if (dataInputStream.available() > 0) {
                     remoteCommand = dataInputStream.readInt();
                 }
+
+                dataOutputStream.writeInt(999);
             }
         } catch (IOException ex) {
             ex.printStackTrace();
             server = null;
             dataInputStream = null;
+            dataOutputStream = null;
         }
     }
 

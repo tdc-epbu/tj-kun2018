@@ -15,6 +15,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
@@ -22,7 +23,7 @@ import java.net.Socket;
 /**
  *
  */
-public class RemoteClient extends Frame implements KeyListener {
+public class RemoteClient extends Frame implements KeyListener, Runnable {
     private static final long serialVersionUID = 1630664954341554884L;
 
     private static final String EV3_IPADDR = "10.0.1.1";
@@ -39,6 +40,8 @@ public class RemoteClient extends Frame implements KeyListener {
 
     private Socket socket;
     private DataOutputStream outStream;
+
+    private DataInputStream inStream;
 
     public RemoteClient(String title, String ip) {
         super(title);
@@ -100,6 +103,7 @@ public class RemoteClient extends Frame implements KeyListener {
                 try {
                     socket = new Socket(txtIPAddress.getText(), PORT);
                     outStream = new DataOutputStream(socket.getOutputStream());
+                    inStream = new DataInputStream(socket.getInputStream());
                     messages.setText("status: CONNECTED");
                     btnConnect.setLabel("Disconnect");
                 } catch (Exception exc) {
@@ -131,4 +135,19 @@ public class RemoteClient extends Frame implements KeyListener {
 
     public void keyReleased(KeyEvent e) {}
     public void keyTyped(KeyEvent arg0) {}
+
+    @Override
+    public void run() {
+            while(true) {
+                try {
+                    if (inStream.available() > 0) {
+                        System.out.println(inStream.readInt());
+                    }
+                } catch (IOException e) {
+                    // TODO 自動生成された catch ブロック
+                    e.printStackTrace();
+                }
+            }
+
+    }
 }
