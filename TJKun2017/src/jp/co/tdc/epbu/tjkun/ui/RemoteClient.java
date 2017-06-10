@@ -19,6 +19,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.nio.ByteBuffer;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -159,8 +160,16 @@ public class RemoteClient extends Frame implements KeyListener, Runnable {
 
                 try {
                     if (inStream.available() > 0) {
-                        System.out.println(inStream.readFloat());
+                        //System.out.println(inStream.readFloat());
                         // 送られてきたバイト配列から各値を取り出して表示。
+
+                    	byte[] logByte = new byte[20];
+
+                    	inStream.read(logByte);
+
+                    	ByteBuffer bb = ByteBuffer.wrap(logByte);
+
+                    	System.out.println(bb.getFloat(0) + ":" + bb.getFloat(4) + ":" + bb.getFloat(8) + ":" + bb.getInt(12) + ":" + bb.getInt(16));
                     }
                 } catch (IOException e) {
                     // TODO 自動生成された catch ブロック
