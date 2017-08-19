@@ -210,7 +210,7 @@ public class EV3 implements Runnable, EV3Control {
 	public void controlBalance(float forward, float turn, int tail) {
 
 		this.forward = forward;
-		this.turn = turn;
+		this.turn = -turn;
 		this.tail = tail;
 		this.balance = true;
 	}
