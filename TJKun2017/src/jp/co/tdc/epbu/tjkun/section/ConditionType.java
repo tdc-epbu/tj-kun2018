@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package jp.co.tdc.epbu.tjkun.section;
 
@@ -17,8 +17,8 @@ public enum ConditionType {
 	/** 障害物検知 */
 	OBSTACLES_DETECTION,
 	/** 衝突検知 */
-	CONFLICT_DETECTION,
-	
+	COLLISION_DETECTION,
+
 	// 実績
 	/** 回転数 */
 	DISTANCE,
@@ -28,5 +28,5 @@ public enum ConditionType {
 	TAIL_ANGLE,
 	/** ライン未検知からの経過時間(ミリ秒) */
 	WHITE_DURATION;
-	
+
 }

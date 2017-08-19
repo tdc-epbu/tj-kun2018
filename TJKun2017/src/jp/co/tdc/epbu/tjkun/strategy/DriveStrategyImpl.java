@@ -12,6 +12,7 @@ import jp.co.tdc.epbu.tjkun.drive.TravelTailImpl;
 import jp.co.tdc.epbu.tjkun.measure.Calibrater;
 import jp.co.tdc.epbu.tjkun.section.Course;
 import jp.co.tdc.epbu.tjkun.section.Section;
+import jp.co.tdc.epbu.tjkun.section.TravelType;
 
 /**
  * @author Takayuki

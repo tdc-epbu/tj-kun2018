@@ -1,7 +1,7 @@
 /**
  *
  */
-package jp.co.tdc.epbu.tjkun.strategy;
+package jp.co.tdc.epbu.tjkun.section;
 
 /**
  * @author t2011002
