@@ -36,4 +36,8 @@ public class DeviceFactory {
 	public TouchSensor getTouchSensor() {
 		return null;
 	}
+
+	public BalancerControl getBalancerControl() {
+		return null;
+	}
 }
