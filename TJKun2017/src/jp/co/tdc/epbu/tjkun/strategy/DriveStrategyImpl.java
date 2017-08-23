@@ -10,8 +10,8 @@ import jp.co.tdc.epbu.tjkun.drive.TravelTailControlRun;
 import jp.co.tdc.epbu.tjkun.drive.TravelTailDownImpl;
 import jp.co.tdc.epbu.tjkun.drive.TravelTailImpl;
 import jp.co.tdc.epbu.tjkun.measure.Calibrater;
-import jp.co.tdc.epbu.tjkun.section.Course;
 import jp.co.tdc.epbu.tjkun.section.Section;
+import jp.co.tdc.epbu.tjkun.section.TravelType;
 
 /**
  * @author Takayuki
@@ -41,7 +41,7 @@ public class DriveStrategyImpl implements DriveStrategy {
 	}
 
 	@Override
-	public void operate(Course cource) throws InterruptedException {
+	public void operate(Story story) throws InterruptedException {
 
 		while (true) {
 
