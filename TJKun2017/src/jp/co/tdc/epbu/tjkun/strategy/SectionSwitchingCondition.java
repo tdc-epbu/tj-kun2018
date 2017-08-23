@@ -21,4 +21,12 @@ public class SectionSwitchingCondition {
 		this.abnormalDetectorList = abnormalDetectorList;
 	}
 
+	public boolean notifyEndCondition() {
+		return true;
+	}
+
+	public boolean notifyAbnormalCondition() {
+		return true;
+	}
+
 }

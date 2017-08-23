@@ -3,6 +3,8 @@
  */
 package jp.co.tdc.epbu.tjkun.strategy;
 
+import jp.co.tdc.epbu.tjkun.section.Course;
+
 /**
  * @author Takayuki
  *

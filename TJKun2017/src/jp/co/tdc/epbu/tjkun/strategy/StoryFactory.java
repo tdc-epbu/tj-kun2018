@@ -65,7 +65,7 @@ public class StoryFactory {
 			scenario = new ToGoalScenario(travelList, switchConditionList);
 			break;
 		case TO_GOAL:
-			// TODO scenario = new
+			scenario = new ToGoalScenario(travelList, switchConditionList);
 			break;
 		case STAIRS:
 			// TODO scenario = new

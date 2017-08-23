@@ -10,8 +10,6 @@ import jp.co.tdc.epbu.tjkun.drive.TravelTailControlRun;
 import jp.co.tdc.epbu.tjkun.drive.TravelTailDownImpl;
 import jp.co.tdc.epbu.tjkun.drive.TravelTailImpl;
 import jp.co.tdc.epbu.tjkun.measure.Calibrater;
-import jp.co.tdc.epbu.tjkun.section.Section;
-import jp.co.tdc.epbu.tjkun.section.TravelType;
 
 /**
  * @author Takayuki
@@ -43,42 +41,16 @@ public class DriveStrategyImpl implements DriveStrategy {
 	@Override
 	public void operate(Story story) throws InterruptedException {
 
-		while (true) {
+		for(Scenario scenario :story.getScenarioList()) {
+			//Section section = cource.DecideSpeed();
 
-			Section section = cource.DecideSpeed();
-
-
-			if (section.getTravelType().equals(TravelType.END)) {
-				break;
-			}
 			Thread.sleep(6);
-			//Delay.msDelay(6);
-
-
-			switch (section.getTravelType()) {
-			case PID:
-				travel.travel(section.getWheelspeed());
-				break;
-			case JAGGY:
-				jaggy.travel(section.getWheelspeed());
-				break;
-			case TAIL:
-				tail.travel(section.getWheelspeed());
-				break;
-			case TAILCONTROL:
-				tailControl.travel(section.getWheelspeed());
-				break;
-			case TAILDOWN:
-				taildown.travel(section.getWheelspeed());
-				break;
-			default:
-			}
+			scenario.capture();
 			Thread.sleep(8);
-			//Delay.msDelay(8);
-
-			//EV3.getInstance().run();
 
 		}
+
+
 	}
 
 }

@@ -11,39 +11,34 @@ import jp.co.tdc.epbu.tjkun.drive.Travel;
  * @author t2011002
  *
  */
-public class Scenario {
+public abstract class Scenario {
 
 	private List<Travel> travelList;
 	private List<SectionSwitchingCondition> switchConditionList;
+	int sectionNo = 0;
 
 	public Scenario(List<Travel> travelList, List<SectionSwitchingCondition> SwitchConditionList) {
 		this.travelList = travelList;
 		this.switchConditionList = SwitchConditionList;
 	}
 
-	/**
-	 * @return travelList
-	 */
-	public List<Travel> getTravelList() {
-		return travelList;
+	public void capture(){
+
+		while(true){
+			travelList.get(sectionNo).travel();
+
+			if(switchConditionList.get(sectionNo).notifyEndCondition()){
+				sectionNo++;
+				if(switchConditionList.size() <= sectionNo) break;
+			}
+
+			if(switchConditionList.get(sectionNo).notifyAbnormalCondition()){
+				recoveryCorrespond();
+			}
+		}
 	}
-	/**
-	 * @param travelList セットする travelList
-	 */
-	public void setTravelList(List<Travel> travelList) {
-		this.travelList = travelList;
-	}
-	/**
-	 * @return switchConditionList
-	 */
-	public List<SectionSwitchingCondition> getSwitchConditionList() {
-		return switchConditionList;
-	}
-	/**
-	 * @param switchConditionList セットする switchConditionList
-	 */
-	public void setSwitchConditionList(List<SectionSwitchingCondition> switchConditionList) {
-		this.switchConditionList = switchConditionList;
-	}
+
+	public abstract void recoveryCorrespond();
+
 
 }
