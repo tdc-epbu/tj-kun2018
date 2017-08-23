@@ -71,6 +71,6 @@ public interface EV3Control {
 	 * @return 回転数
 	 */
 	public int getRMotorCount();
-	
+
 	public int getTailAngle();
 }

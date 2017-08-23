@@ -31,4 +31,13 @@ public class DeviceFactory {
 	public UltrasonicSensor getUltrasonicSensor() {
 		return null;
 	}
+
+
+	public TouchSensor getTouchSensor() {
+		return null;
+	}
+
+	public BalancerControl getBalancerControl() {
+		return null;
+	}
 }
