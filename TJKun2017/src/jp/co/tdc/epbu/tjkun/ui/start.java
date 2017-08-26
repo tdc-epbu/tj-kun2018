@@ -1,11 +1,9 @@
 package jp.co.tdc.epbu.tjkun.ui;
 
-import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
-import jp.co.tdc.epbu.tjkun.device.EV3;
+import jp.co.tdc.epbu.tjkun.device.DeviceFactory;
 import jp.co.tdc.epbu.tjkun.measure.Button;
 import jp.co.tdc.epbu.tjkun.measure.Calibrater;
 import jp.co.tdc.epbu.tjkun.measure.TouchStatus;
@@ -27,147 +25,137 @@ import lejos.utility.Delay;
  */
 public class start implements Runnable {
 
-	private ScheduledExecutorService scheduler;
-	private ScheduledFuture<?> futureDrive;
-	private ScheduledFuture<?> futureRemote;
-	private ScheduledFuture<?> futureStart;
-	private DriveStrategy driveStrategy;
+    private ScheduledExecutorService scheduler;
 
-	private Course cource;
+    private TJScheduler tjScheduler;
 
-	Button button;
-	Calibrater calibrater;
+    private DeviceFactory deviceFactory;
 
-	boolean endFlag;
+    private DriveStrategy driveStrategy;
 
-	public static void main(String[] args) {
+    private Course cource;
 
-		start starti = new start();
+    Button button;
+    Calibrater calibrater;
 
-		starti.control();
+    boolean endFlag;
 
-	}
+    public static void main(String[] args) {
 
-	public void starter() {
+        start starti = new start();
 
-		EV3 ev3 = EV3.getInstance();
+        starti.control();
 
-		try {
+    }
 
-			scheduler = Executors.newScheduledThreadPool(3);
+    private start() {
+        tjScheduler = TJScheduler.getInstance();
+        deviceFactory = DeviceFactory.getInstance();
 
-			futureDrive = scheduler.scheduleAtFixedRate(ev3, 0, 4, TimeUnit.MILLISECONDS);
-			ev3.controlDirect(0, 0, 0);
+    }
 
-			driveStrategy = new DriveStrategyImpl(calibrater);
+    public void starter() {
 
-			cource = CourceFactory.create(CourceType.LEFT);
+        deviceFactory.getDirectControl().controlDirect(0, 0, 0);
 
-			// PIDDriver pidDriver = new PIDDriver(ev3, calibrater);
+        driveStrategy = new DriveStrategyImpl(calibrater);
 
-			LCD.drawString("Start Wait", 0, 3);
-			while (button.touchStatus() != TouchStatus.Released) {
-				Delay.msDelay(10);
-			}
+        cource = CourceFactory.create(CourceType.LEFT);
 
-			ev3.reset();
-			Sound.beep();
+        // PIDDriver pidDriver = new PIDDriver(ev3, calibrater);
 
-			futureRemote = scheduler.scheduleAtFixedRate(RemoteTask.getInstance(), 0, 500, TimeUnit.MILLISECONDS);
+        LCD.drawString("Start Wait", 0, 3);
+        while (button.touchStatus() != TouchStatus.Released) {
+            Delay.msDelay(10);
+        }
 
-			// 尻尾を停止位置へ固定しスタート準備
-			while (button.touchStatus() != TouchStatus.Released
-					&& !RemoteTask.getInstance().checkRemoteCommand(RemoteTask.REMOTE_COMMAND_START)) {
-				ev3.controlDirect(0, 0, 96);
-				Delay.msDelay(10);
-			}
+        deviceFactory.getDeviceControl().reset();
+        Sound.beep();
 
-			// デバッグ用
-			// while (button.touchStatus() != TouchStatus.Released) {
-			// ev3.controlBalance(0, 0, 0);
-			// Delay.msDelay(4);
-			// }
+        tjScheduler.addFuture(RemoteTask.getInstance(), 0, 500, TimeUnit.MILLISECONDS);
 
-			EV3.getInstance().controlBalance(2, 2, 90);
-			Delay.msDelay(100);
+        // 尻尾を停止位置へ固定しスタート準備
+        while (button.touchStatus() != TouchStatus.Released
+                && !RemoteTask.getInstance().checkRemoteCommand(RemoteTask.REMOTE_COMMAND_START)) {
+            deviceFactory.getDirectControl().controlDirect(0, 0, 96);
+            Delay.msDelay(10);
+        }
 
-			futureDrive = scheduler.scheduleAtFixedRate(this, 0, 10, TimeUnit.MILLISECONDS);
+        // デバッグ用
+        // while (button.touchStatus() != TouchStatus.Released) {
+        // ev3.controlBalance(0, 0, 0);
+        // Delay.msDelay(4);
+        // }
 
-			while (button.touchStatus() != TouchStatus.Released
-					&& !RemoteTask.getInstance().checkRemoteCommand(RemoteTask.REMOTE_COMMAND_STOP)) {
-				Delay.msDelay(250);
-			}
+        deviceFactory.getBalancerControl().controlBalance(2, 2, 90);
+        Delay.msDelay(100);
 
-			// pidDriver.drive(80, 13600, 13600);
+        tjScheduler.addFuture(this, 0, 10, TimeUnit.MILLISECONDS);
 
-			// Todo：スタート準備完了後、走行戦略の判定処理を呼び出す
-			// DriveStrategy drivestrategy = new DriveStrategyImpl();
-			// drivestrategy.operate();
+        while (button.touchStatus() != TouchStatus.Released
+                && !RemoteTask.getInstance().checkRemoteCommand(RemoteTask.REMOTE_COMMAND_STOP)) {
+            Delay.msDelay(250);
+        }
 
-			while (button.touchStatus() != TouchStatus.Released
-					&& !RemoteTask.getInstance().checkRemoteCommand(RemoteTask.REMOTE_COMMAND_STOP)) {
-				endFlag  = lejos.hardware.Button.DOWN.isDown();
-				Delay.msDelay(250);
-			}
+        // pidDriver.drive(80, 13600, 13600);
 
-		} finally {
+        // Todo：スタート準備完了後、走行戦略の判定処理を呼び出す
+        // DriveStrategy drivestrategy = new DriveStrategyImpl();
+        // drivestrategy.operate();
 
-			if (futureStart != null) {
-				futureStart.cancel(true);
-			}
+        while (button.touchStatus() != TouchStatus.Released
+                && !RemoteTask.getInstance().checkRemoteCommand(RemoteTask.REMOTE_COMMAND_STOP)) {
+            endFlag = lejos.hardware.Button.DOWN.isDown();
+            Delay.msDelay(250);
+        }
 
-			if (futureDrive != null) {
-				futureDrive.cancel(true);
-			}
+    }
 
-			if (futureRemote != null) {
-				futureRemote.cancel(true);
-			}
+    public void control() {
 
-			scheduler.shutdownNow();
-		}
-	}
+        // キャリブレーション実行
 
-	public void control() {
+        try {
 
-		// キャリブレーション実行
+            this.calibrater = Calibrater.getInstance();
+            while (this.calibrater.calibration()) {
 
-		this.calibrater = new Calibrater(EV3.getInstance(), button);
-		while(this.calibrater.calibration()) {
+            }
 
-		}
+            while (true) {
 
-		while (true) {
+                this.starter();
 
+                if (endFlag) {
+                    break;
+                }
 
-			this.starter();
+                LCD.clear();
+            }
 
-			if (endFlag) {
-				break;
-			}
+        } finally {
 
+            tjScheduler.close();
+            RemoteTask.getInstance().close();
+            deviceFactory.getDeviceControl().close();
 
-			LCD.clear();
-		}
+        }
 
-		RemoteTask.getInstance().close();
-		EV3.getInstance().close();
+    }
 
-	}
+    @Override
+    public void run() {
+        try {
+            driveStrategy.operate(cource);
 
-	@Override
-	public void run() {
-		try {
-			driveStrategy.operate(cource);
-
-//			while (true) {
-//				EV3.getInstance().controlDirect(0, 0, 90);
-//				Delay.msDelay(100);
-//			}
-		} catch (InterruptedException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		}
-	}
+            //			while (true) {
+            //				EV3.getInstance().controlDirect(0, 0, 90);
+            //				Delay.msDelay(100);
+            //			}
+        } catch (InterruptedException e) {
+            // TODO 自動生成された catch ブロック
+            e.printStackTrace();
+        }
+    }
 
 }

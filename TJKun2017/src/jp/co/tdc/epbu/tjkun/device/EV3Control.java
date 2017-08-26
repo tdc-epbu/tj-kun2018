@@ -7,8 +7,7 @@ package jp.co.tdc.epbu.tjkun.device;
  *
  */
 interface EV3Control extends BalancerControl, DrivingWheel, Tail, GyroSensor, UltrasonicSensor, LightSensor,
-        TouchSensor, DirectControl {
+        TouchSensor, DirectControl, DeviceReset, DeviceControl, Runnable {
 
-    void close();
 
 }
