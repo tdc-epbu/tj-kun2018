@@ -12,6 +12,8 @@ import jp.co.tdc.epbu.tjkun.drive.TravelPidImpl;
 import jp.co.tdc.epbu.tjkun.drive.TravelSpinImpl;
 import jp.co.tdc.epbu.tjkun.measure.BlackLineDetection;
 import jp.co.tdc.epbu.tjkun.measure.Detection;
+import jp.co.tdc.epbu.tjkun.measure.ElapsedTime;
+import jp.co.tdc.epbu.tjkun.measure.LeftMoterDetection;
 import jp.co.tdc.epbu.tjkun.section.Area;
 import jp.co.tdc.epbu.tjkun.section.Condition;
 import jp.co.tdc.epbu.tjkun.section.CourceType;
@@ -109,11 +111,11 @@ public class StoryFactory {
 				break;
 			// ライントレースOFF
 			case BALANCE:
-//				travel = new TravelTailControlRun(speed, tail);
+				// travel = new TravelTailControlRun(speed, tail);
 				break;
 			// ダイレクト
 			case DIRECT:
-//				travel = new TravelTailDownImpl(speed);
+				// travel = new TravelTailDownImpl(speed);
 				break;
 			default:
 				break;
@@ -158,29 +160,35 @@ public class StoryFactory {
 
 		List<Detection> detectorList = new ArrayList<>();
 		// TODO コース情報作成の都合上、一旦Sectionの判定条件はリストでなく単一所持にしている
-		int blackline = 0;
 		// for (Condition condition : conditionList) {
 		Detection detection = null;
 		switch (condition.getConditionType()) {
 		// ライン検知
 		case BLACK_DETECTION:
-			detection = new BlackLineDetection(blackline);
+			detection = new BlackLineDetection(condition.getConditionValue());
 			break;
+		case TIME:
+			detection = new ElapsedTime((int) condition.getConditionValue());
+			break;
+		case DISTANCE:
+			detection = new LeftMoterDetection((int) condition.getConditionValue());
+			break;
+
 		// TODO 振動検知
-//		case COLLISION_DETECTION:
-//			detection = new CollisionSensor(condition.getConditionValue());
-//			break;
+		// case COLLISION_DETECTION:
+		// detection = new CollisionSensor(condition.getConditionValue());
+		// break;
 		// TODO 障害物検知
-//		case DISTANCE:
-//			break;
+		// case DISTANCE:
+		// break;
 		// TODO 左車輪回転数検知
-//		case GRAY_DETECTION:
-//			detection = new
-//			break;
+		// case GRAY_DETECTION:
+		// detection = new
+		// break;
 		// TODO 右車輪回転数検知
-//			case GRAY_DETECTION:
-//				detection = new
-//				break;
+		// case GRAY_DETECTION:
+		// detection = new
+		// break;
 		default:
 			break;
 		}
