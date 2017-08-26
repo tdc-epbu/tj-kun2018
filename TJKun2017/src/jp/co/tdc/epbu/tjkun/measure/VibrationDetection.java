@@ -13,7 +13,7 @@ public class VibrationDetection implements Detection{
 	@Override
 	public boolean Notify() {
 		// ジャイロセンサーから値を取得する
-		if (DeviceFactory.getInstance().getVibration().getGyro() > vibrationDetection) {
+		if (DeviceFactory.getInstance().getGyroSensor().getGyroValue() > vibrationDetection) {
 			return true;
 		} else {
 			return false;

@@ -49,6 +49,10 @@ public class DeviceFactory {
         return ev3;
     }
 
+    public GyroSensor getGyroSensor() {
+        return ev3;
+    }
+
     public DirectControl getDirectControl() {
         return ev3;
     }
