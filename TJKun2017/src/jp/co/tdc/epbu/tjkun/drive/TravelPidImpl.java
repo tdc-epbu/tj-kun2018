@@ -25,14 +25,12 @@ public class TravelPidImpl implements Travel {
 	public TravelPidImpl(WheelSpeed speed) {
 		this.speed = speed;
 
-		this.calibrater = calibrater;
+		this.calibrater = Calibrater.getInstance();
 
 		this.targetLight = 60;
 		this.integral = 0;
 		this.diff[0] = 0;
 		this.diff[1] = 0;
-
-
 
 		stopwatch = new Stopwatch();
 

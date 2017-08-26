@@ -1,6 +1,7 @@
 package jp.co.tdc.epbu.tjkun.drive;
 
 import jp.co.tdc.epbu.tjkun.device.EV3;
+import jp.co.tdc.epbu.tjkun.measure.Calibrater;
 
 public class TravelJaggyImpl implements Travel {
 
@@ -15,6 +16,7 @@ public class TravelJaggyImpl implements Travel {
 
 	public TravelJaggyImpl(WheelSpeed speed) {
 		this.speed = speed;
+		Calibrater calibrater = Calibrater.getInstance();
 		this.THRESHOLD = (calibrater.blackBaseline() + calibrater.whiteBaseline()) / 2.0F;
 
 	}

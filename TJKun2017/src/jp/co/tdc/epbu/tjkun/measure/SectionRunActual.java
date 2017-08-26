@@ -1,57 +1,52 @@
 package jp.co.tdc.epbu.tjkun.measure;
 
-import jp.co.tdc.epbu.tjkun.device.EV3Control;
-import jp.co.tdc.epbu.tjkun.section.Condition;
+import jp.co.tdc.epbu.tjkun.device.DeviceFactory;
 import lejos.utility.Stopwatch;
 
 public class SectionRunActual {
 
-	private EV3Control ev3Control;
-
 	Stopwatch time = new Stopwatch();
-	int initMotorCount;
+	// 左回転数初期値
+	int initLMotorCount;
+	// 右回転数初期値
+	int initRMotorCount;
 
-	public SectionRunActual(EV3Control ev3Control) {
-		this.ev3Control = ev3Control;
+	public SectionRunActual() {
 	}
 
-	public boolean notify(Condition condition){
-		boolean notify = false;
-		switch (condition.getConditionType()){
-		case DISTANCE:
-			// 回転数
+    private static SectionRunActual instance;
 
-			int motorCount = Math.abs(ev3Control.getLMotorCount() - initMotorCount);
-			if (condition.getConditionValue() <= motorCount) {
-				notify = true;
-			}
-			break;
-		case TIME:
-			// 時間
-			if (condition.getConditionValue() <= time.elapsed()) { // 時間の基準はチューニングする必要あり
-				notify = true;
-			}
-			break;
-		case OBSTACLES_DETECTION:
-			// 未実装
-			if (ev3Control.getSonarDistance() < 0.1) { // 閾値は仮設定
-				return true;
-			}
-			break;
-		case TAIL_ANGLE:
-			if (condition.getConditionValue() >= ev3Control.getTailAngle()) {
-				return true;
-			}
-			break;
-		}
+    public static SectionRunActual getInstance() {
 
-		return notify;
-	}
+        if (instance == null) {
+            instance = new SectionRunActual();
+        }
+
+           return instance;
+    }
+
 	public void start(){
-
 		time.reset();
-		this.initMotorCount  = ev3Control.getLMotorCount();
+		this.initLMotorCount  = DeviceFactory.getInstance().getDrivingWheel().getLMotorCount();
+		this.initRMotorCount  = DeviceFactory.getInstance().getDrivingWheel().getRMotorCount();
+	}
 
+	/**
+	 * 区間内左モーター回転数返却
+	 */
+	public int getSectionLMotorCount(){
+		return DeviceFactory.getInstance().getDrivingWheel().getLMotorCount() - initLMotorCount;
+	}
+
+	/**
+	 * 区間内右モーター回転数返却
+	 */
+	public int getSectionRMotorCount(){
+		return DeviceFactory.getInstance().getDrivingWheel().getRMotorCount() - initRMotorCount;
+	}
+
+	public int getTime(){
+		return time.elapsed();
 	}
 }
 

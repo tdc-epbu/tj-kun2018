@@ -11,10 +11,10 @@ public class TravelTailImpl implements Travel {
 	private Calibrater calibrater;
 	private WheelSpeed speed;
 
-	public TravelTailImplWheelSpeed speed, int tail) {
+	public TravelTailImpl(WheelSpeed speed, int tail) {
 		this.speed = speed;
 		//this.THRESHOLD = (calibrater.blackBaseline() + calibrater.whiteBaseline() * 2) / 3.0F;
-		this.calibrater = calibrater;
+		this.calibrater = Calibrater.getInstance();
 		this.tail = tail;
 	}
 
