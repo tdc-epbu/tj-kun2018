@@ -9,10 +9,10 @@ import jp.co.tdc.epbu.tjkun.measure.Calibrater;
 import jp.co.tdc.epbu.tjkun.measure.TouchStatus;
 import jp.co.tdc.epbu.tjkun.sample.RemoteTask;
 import jp.co.tdc.epbu.tjkun.section.CourceType;
-import jp.co.tdc.epbu.tjkun.section.Course;
-import jp.co.tdc.epbu.tjkun.strategy.CourceFactory;
 import jp.co.tdc.epbu.tjkun.strategy.DriveStrategy;
 import jp.co.tdc.epbu.tjkun.strategy.DriveStrategyImpl;
+import jp.co.tdc.epbu.tjkun.strategy.Story;
+import jp.co.tdc.epbu.tjkun.strategy.StoryFactory;
 import lejos.hardware.Sound;
 import lejos.hardware.lcd.LCD;
 import lejos.utility.Delay;
@@ -33,7 +33,7 @@ public class start implements Runnable {
 
     private DriveStrategy driveStrategy;
 
-    private Course cource;
+    private Story story;
 
     Button button;
     Calibrater calibrater;
@@ -58,9 +58,10 @@ public class start implements Runnable {
 
         deviceFactory.getDirectControl().controlDirect(0, 0, 0);
 
-        driveStrategy = new DriveStrategyImpl(calibrater);
+        driveStrategy = new DriveStrategyImpl();
 
-        cource = CourceFactory.create(CourceType.LEFT);
+        //cource = CourceFactory.create(CourceType.LEFT);
+        story = StoryFactory.create(CourceType.LEFT);
 
         // PIDDriver pidDriver = new PIDDriver(ev3, calibrater);
 
@@ -146,7 +147,7 @@ public class start implements Runnable {
     @Override
     public void run() {
         try {
-            driveStrategy.operate(cource);
+            driveStrategy.operate(story);
 
             //			while (true) {
             //				EV3.getInstance().controlDirect(0, 0, 90);
