@@ -8,12 +8,6 @@ package jp.co.tdc.epbu.tjkun.device;
  */
 public interface Tail {
 
-	/**
-	 * 尻尾の角度を設定する。
-	 * @param angle 設定する尻尾の角度
-	 */
-	void setAngle(int angle);
-
 
 	/**
 	 * 尻尾の角度を取得する。

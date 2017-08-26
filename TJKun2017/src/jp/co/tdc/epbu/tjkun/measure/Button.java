@@ -1,22 +1,24 @@
 package jp.co.tdc.epbu.tjkun.measure;
 
-import jp.co.tdc.epbu.tjkun.device.EV3Control;
+import jp.co.tdc.epbu.tjkun.device.DeviceFactory;
+import jp.co.tdc.epbu.tjkun.device.TouchSensor;
 
 
 public class Button {
 
 	private boolean pressStatus;
-    private EV3Control ev3Control;
+
+    private TouchSensor touchSensor;
 
 
-	public Button(EV3Control ev3Control) {
-		this.ev3Control = ev3Control;
+	public Button() {
+		this.touchSensor = DeviceFactory.getInstance().getTouchSensor();
 	}
 
 	public TouchStatus touchStatus() {
 
 
-		if (ev3Control.touchSensorIsPressed()) {
+		if (touchSensor.touchSensorIsPressed()) {
 			pressStatus = true; // タッチセンサーが押された
 			return TouchStatus.Pressed;
 		} else {

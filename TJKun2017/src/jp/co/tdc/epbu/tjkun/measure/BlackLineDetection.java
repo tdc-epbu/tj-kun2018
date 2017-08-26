@@ -12,7 +12,7 @@ public class BlackLineDetection implements Detection{
 
 	@Override
 	public boolean Notify() {
-		if (DeviceFactory.getInstance().getLightSensor().getBrightness() > blackLineDetection) {
+		if (DeviceFactory.getInstance().getLightSensor().getBrightness() < blackLineDetection) {
 			return true;
 		} else {
 			return false;
