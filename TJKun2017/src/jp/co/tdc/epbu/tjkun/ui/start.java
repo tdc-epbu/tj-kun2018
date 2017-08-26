@@ -131,7 +131,7 @@ public class start implements Runnable {
 	public void control() {
 
 		// キャリブレーション実行
-		this.button = new Button(EV3.getInstance());
+
 		this.calibrater = new Calibrater(EV3.getInstance(), button);
 		while(this.calibrater.calibration()) {
 
