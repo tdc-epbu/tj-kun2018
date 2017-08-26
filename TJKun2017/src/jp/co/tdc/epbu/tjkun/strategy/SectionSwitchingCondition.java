@@ -22,11 +22,23 @@ public class SectionSwitchingCondition {
 	}
 
 	public boolean notifyEndCondition() {
-		return true;
+
+		for (Detection endDetection : endDetectorList) {
+			if(endDetection.Notify()) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public boolean notifyAbnormalCondition() {
-		return true;
+
+		for (Detection abnormalDetector : abnormalDetectorList) {
+			if(abnormalDetector.Notify()) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }
