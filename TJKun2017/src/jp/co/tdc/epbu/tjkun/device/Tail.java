@@ -19,5 +19,5 @@ public interface Tail {
 	 * 尻尾の角度を取得する。
 	 * @return
 	 */
-	int getAngle();
+	int getTailAngle();
 }
