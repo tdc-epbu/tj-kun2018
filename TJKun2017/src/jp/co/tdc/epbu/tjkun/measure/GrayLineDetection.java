@@ -5,7 +5,7 @@ import java.util.TimerTask;
 
 import jp.co.tdc.epbu.tjkun.device.EV3Control;
 
-public class LineChecker {
+public class GrayLineDetection {
 
 	private static EV3Control ev3Control;
 	static int grayCount  = 0;
@@ -29,8 +29,8 @@ public class LineChecker {
         timer.cancel();
     }
 
-	public LineChecker(EV3Control ev3Control) {
-		LineChecker.ev3Control = ev3Control;
+	public GrayLineDetection(EV3Control ev3Control) {
+		GrayLineDetection.ev3Control = ev3Control;
 	}
 
 	public static boolean lineCheck() {

@@ -1,17 +1,19 @@
 package jp.co.tdc.epbu.tjkun.measure;
 
-import jp.co.tdc.epbu.tjkun.device.EV3Control;
+import jp.co.tdc.epbu.tjkun.device.DeviceFactory;
 
 public class VibrationDetection implements Detection{
 
-	private EV3Control ev3Control;
-	public VibrationDetection(EV3Control ev3Control) {
-		this.ev3Control = ev3Control;
+	int vibrationDetection = 0;
+
+	public VibrationDetection(int vibration) {
+		this.vibrationDetection = vibration;
 	}
 
 	@Override
 	public boolean Notify() {
-		if (ev3Control.getGyroValue() < 0) { // 閾値は仮設定
+		// ジャイロセンサーから値を取得する
+		if (DeviceFactory.getInstance().getVibration().getGyro() > vibrationDetection) {
 			return true;
 		} else {
 			return false;

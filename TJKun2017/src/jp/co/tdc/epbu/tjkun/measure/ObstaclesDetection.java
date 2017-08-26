@@ -1,21 +1,23 @@
 package jp.co.tdc.epbu.tjkun.measure;
 
-import jp.co.tdc.epbu.tjkun.device.EV3Control;
+import jp.co.tdc.epbu.tjkun.device.DeviceFactory;
 
 public class ObstaclesDetection implements Detection{
 
-	private EV3Control ev3Control;
-	public ObstaclesDetection(EV3Control ev3Control) {
-		this.ev3Control = ev3Control;
+	int obstaclesDetection = 0;
+
+	public ObstaclesDetection(int obstacles) {
+		this.obstaclesDetection = obstacles;
 	}
 
 	@Override
 	public boolean Notify() {
-		if (ev3Control.getSonarDistance() < 0.3) { // 閾値は仮設定
+		if (DeviceFactory.getInstance().getUltrasonicSensor().getSonarDistance() >  obstaclesDetection) {
 			return true;
 		} else {
 			return false;
 		}
 	}
+
 }
 

@@ -1,17 +1,18 @@
 package jp.co.tdc.epbu.tjkun.measure;
 
-import jp.co.tdc.epbu.tjkun.device.EV3Control;
+import jp.co.tdc.epbu.tjkun.device.DeviceFactory;
 
 public class RightMoterDetection implements Detection{
 
-	private EV3Control ev3Control;
-	public RightMoterDetection(EV3Control ev3Control) {
-		this.ev3Control = ev3Control;
+	int rightMoterDetection = 0;
+
+	public RightMoterDetection(int rightMoter) {
+		this.rightMoterDetection = rightMoter;
 	}
 
 	@Override
 	public boolean Notify() {
-		if (ev3Control.getRMotorCount() > 10) { // 閾値は仮設定
+		if (DeviceFactory.getInstance().getDrivingWheel().getRMotorCount() > rightMoterDetection) {
 			return true;
 		} else {
 			return false;

@@ -1,23 +1,20 @@
 package jp.co.tdc.epbu.tjkun.measure;
 
 import jp.co.tdc.epbu.tjkun.device.DeviceFactory;
-import jp.co.tdc.epbu.tjkun.device.EV3Control;
 
 public class TailDetection implements Detection{
 
-	private EV3Control ev3Control;
 	int tailAngle = 0;
 
 
-	//コンストラクタに引数を持たせる
-	public TailDetection(int Angle) {
-		this.tailAngle = Angle;
+	public TailDetection(int angle) {
+		this.tailAngle = angle;
 
 	}
 
 	@Override
 	public boolean Notify() {
-		if (DeviceFactory.getInstance().getTail().getTailAngle() > tailAngle) { // 閾値は仮設定
+		if (DeviceFactory.getInstance().getTail().getTailAngle() > tailAngle) {
 			return true;
 		} else {
 			return false;
