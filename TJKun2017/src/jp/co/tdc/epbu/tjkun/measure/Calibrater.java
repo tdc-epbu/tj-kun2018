@@ -1,7 +1,7 @@
 package jp.co.tdc.epbu.tjkun.measure;
 
-import jp.co.tdc.epbu.tjkun.device.EV3;
-import jp.co.tdc.epbu.tjkun.device.EV3Control;
+import jp.co.tdc.epbu.tjkun.device.DeviceFactory;
+import jp.co.tdc.epbu.tjkun.device.LightSensor;
 import lejos.hardware.lcd.LCD;
 import lejos.utility.Delay;
 
@@ -13,7 +13,8 @@ import lejos.utility.Delay;
  */
 public class Calibrater {
 
-    private EV3Control ev3Control;
+    private LightSensor lightSensor;
+
     private Button button;
 
     private float blackBaseline;
@@ -23,8 +24,8 @@ public class Calibrater {
 
     private Calibrater() {
 
-        this.ev3Control = EV3.getInstance();
-        this.button = new Button(ev3Control);
+        lightSensor = DeviceFactory.getInstance().getLightSensor();
+        this.button = new Button();
     }
 
     private static Calibrater instance;
@@ -69,7 +70,7 @@ public class Calibrater {
         while (button.touchStatus() != TouchStatus.Released) {
             Delay.msDelay(10);
         }
-        return ev3Control.getBrightness();
+        return lightSensor.getBrightness();
     }
 
     public float blackBaseline() {
