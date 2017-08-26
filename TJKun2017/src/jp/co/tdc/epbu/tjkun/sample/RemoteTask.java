@@ -14,7 +14,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.ByteBuffer;
 
-import jp.co.tdc.epbu.tjkun.device.EV3;
+import jp.co.tdc.epbu.tjkun.device.DeviceFactory;
 
 /**
  * PC との通信制御タスク。
@@ -76,13 +76,14 @@ public class RemoteTask implements Runnable {
 					remoteCommand = dataInputStream.readInt();
 				}
 
-				EV3 ev3 = EV3.getInstance();
+				//EV3 ev3 = EV3.getInstance();
+				DeviceFactory df = DeviceFactory.getInstance();
 
 				// 送りたいデータのバイト配列を作成する。
 				// 配列レイアウト：輝度値(4),障害物との距離(4),角速度(4),左モーター速度(4),右モーター速度(4),
 
-				byte[] LogByte = ByteBuffer.allocate(20).putFloat(0, ev3.getBrightness()).putFloat(4, ev3.getSonarDistance()).putFloat(8, ev3.getGyroValue()).
-						putInt(12, ev3.getLMotorCount()).putInt(16, ev3.getRMotorCount()).array();
+				byte[] LogByte = ByteBuffer.allocate(20).putFloat(0, df.getLightSensor().getBrightness()).putFloat(4, df.getUltrasonicSensor().getSonarDistance()).putFloat(8, df.getGyroSensor().getGyroValue()).
+						putInt(12, df.getDrivingWheel().getLMotorCount()).putInt(16, df.getDrivingWheel().getRMotorCount()).array();
 
 				dataOutputStream.write(LogByte);
 

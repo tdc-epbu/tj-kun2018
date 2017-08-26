@@ -23,7 +23,7 @@ import lejos.utility.Delay;
 /**
  * EV3way本体のモータとセンサーを扱うクラス。
  */
-class EV3 implements Runnable, EV3Control {
+class EV3 implements EV3Control {
 	public static final int TAIL_ANGLE_STAND_UP = 94; // 完全停止時の角度[度]
 	public static final int TAIL_ANGLE_DRIVE = 3; // バランス走行時の角度[度]
 
@@ -194,7 +194,7 @@ class EV3 implements Runnable, EV3Control {
 	 * @return true ならタッチセンサーが押された。
 	 */
 	public final boolean touchSensorIsPressed() {
-		touchMode.fetchSample(sampleTouch, 0);
+		//touchMode.fetchSample(sampleTouch, 0);
 		return ((int) sampleTouch[0] != 0);
 	}
 
@@ -248,7 +248,7 @@ class EV3 implements Runnable, EV3Control {
 	 * @return 輝度値。
 	 */
 	public final float getBrightness() {
-		redMode.fetchSample(sampleLight, 0);
+		//redMode.fetchSample(sampleLight, 0);
 		return sampleLight[0];
 	}
 
@@ -258,7 +258,7 @@ class EV3 implements Runnable, EV3Control {
 	 * @return 角速度。
 	 */
 	public final float getGyroValue() {
-		rate.fetchSample(sampleGyro, 0);
+		//rate.fetchSample(sampleGyro, 0);
 		// leJOS ではジャイロセンサーの角速度値が正負逆になっているので、
 		// 倒立振子ライブラリの仕様に合わせる。
 		return -sampleGyro[0];
@@ -273,7 +273,9 @@ class EV3 implements Runnable, EV3Control {
 			driveCallCounter = 0;
 		}
 
-		//redMode.fetchSample(sampleLight, 0);
+		redMode.fetchSample(sampleLight, 0);
+		touchMode.fetchSample(sampleTouch, 0);
+		rate.fetchSample(sampleGyro, 0);
 
 
 		if (balance) {

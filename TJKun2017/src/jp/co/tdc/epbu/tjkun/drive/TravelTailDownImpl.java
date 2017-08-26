@@ -13,9 +13,11 @@ public class TravelTailDownImpl implements Travel {
 	int tail_down = 90;
 	int state = tail_down;
 	private WheelSpeed speed;
+	private int tailAngle;
 
-	public TravelTailDownImpl(WheelSpeed speed) {
+	public TravelTailDownImpl(WheelSpeed speed, int tailAngle) {
 		this.speed = speed;
+		this.tailAngle = tailAngle;
 
 		directControl = DeviceFactory.getInstance().getDirectControl();
 	}

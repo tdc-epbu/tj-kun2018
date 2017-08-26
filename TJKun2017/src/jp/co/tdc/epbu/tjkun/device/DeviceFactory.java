@@ -1,5 +1,9 @@
 package jp.co.tdc.epbu.tjkun.device;
 
+import java.util.concurrent.TimeUnit;
+
+import jp.co.tdc.epbu.tjkun.ui.TJScheduler;
+
 public class DeviceFactory {
 
     private EV3Control ev3;
@@ -7,6 +11,8 @@ public class DeviceFactory {
     private DeviceFactory() {
 
         ev3 = EV3.getInstance();
+
+        TJScheduler.getInstance().addFuture(ev3, 0, 4, TimeUnit.MILLISECONDS);
     }
 
     public static DeviceFactory getInstance() {
@@ -43,11 +49,15 @@ public class DeviceFactory {
         return ev3;
     }
 
+    public GyroSensor getGyroSensor() {
+        return ev3;
+    }
+
     public DirectControl getDirectControl() {
         return ev3;
     }
 
-    public void close() {
-        ev3.close();
+    public DeviceControl getDeviceControl() {
+        return ev3;
     }
 }
