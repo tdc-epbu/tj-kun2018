@@ -146,10 +146,10 @@ public class StoryFactory {
 	private static SectionSwitchingCondition createSwitchCondition(Section section) {
 
 		List<Detection> endDetectorList = createDetector(section.getEndCondition());
-		List<Detection> abnormalDetectorList = createDetector(section.getAbnormalCondition());
+		//List<Detection> abnormalDetectorList = createDetector(section.getAbnormalCondition());
 
 		SectionSwitchingCondition switchCondition = new SectionSwitchingCondition(endDetectorList,
-				abnormalDetectorList);
+				null);
 		return switchCondition;
 	}
 

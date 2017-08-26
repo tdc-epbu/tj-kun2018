@@ -51,6 +51,7 @@ public class start implements Runnable {
     private start() {
         tjScheduler = TJScheduler.getInstance();
         deviceFactory = DeviceFactory.getInstance();
+        button = new Button();
 
     }
 
