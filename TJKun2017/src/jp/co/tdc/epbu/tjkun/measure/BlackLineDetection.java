@@ -4,9 +4,9 @@ import jp.co.tdc.epbu.tjkun.device.DeviceFactory;
 
 public class BlackLineDetection implements Detection{
 
-	int blackLineDetection = 0;
+	float blackLineDetection = 0;
 
-	public BlackLineDetection(int blackline) {
+	public BlackLineDetection(float blackline) {
 		this.blackLineDetection = blackline;
 	}
 
