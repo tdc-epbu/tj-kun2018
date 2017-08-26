@@ -7,8 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jp.co.tdc.epbu.tjkun.drive.Travel;
-import jp.co.tdc.epbu.tjkun.measure.CollisionSensor;
-import jp.co.tdc.epbu.tjkun.measure.Detector;
+import jp.co.tdc.epbu.tjkun.drive.TravelJaggyImpl;
+import jp.co.tdc.epbu.tjkun.drive.TravelPidImpl;
+import jp.co.tdc.epbu.tjkun.drive.TravelSpinImpl;
+import jp.co.tdc.epbu.tjkun.measure.BlackLineDetection;
+import jp.co.tdc.epbu.tjkun.measure.Detection;
 import jp.co.tdc.epbu.tjkun.section.Area;
 import jp.co.tdc.epbu.tjkun.section.Condition;
 import jp.co.tdc.epbu.tjkun.section.CourceType;
@@ -68,13 +71,13 @@ public class StoryFactory {
 			scenario = new ToGoalScenario(travelList, switchConditionList);
 			break;
 		case STAIRS:
-			// TODO scenario = new
+			scenario = new StairsScenario(travelList, switchConditionList);
 			break;
 		case GATE:
-			// TODO scenario = new
+			scenario = new GateScenario(travelList, switchConditionList);
 			break;
 		case GARAGE:
-			// TODO scenario = new
+			scenario = new GarageScenario(travelList, switchConditionList);
 			break;
 		default:
 		}
@@ -92,23 +95,25 @@ public class StoryFactory {
 		for (Section section : sectionList) {
 			Travel travel = null;
 			switch (section.getTravelType()) {
-			case END:
-				// TODO travel = new
-				break;
+			// ジグザグ走行
 			case JAGGY:
-				// TODO travel = new
+				travel = new TravelJaggyImpl(section.getSpeed(), section.getTailAngle());
 				break;
+			// PID走行
 			case PID:
-				// TODO travel = new
+				travel = new TravelPidImpl(section.getSpeed(), section.getTailAngle());
 				break;
-			case TAIL:
-				// TODO travel = new
+			// スピン
+			case SPIN:
+				travel = new TravelSpinImpl(section.getSpeed(), section.getTailAngle());
 				break;
-			case TAILCONTROL:
-				// TODO travel = new
+			// ライントレースOFF
+			case BALANCE:
+//				travel = new TravelTailControlRun(speed, tail);
 				break;
-			case TAILDOWN:
-				// TODO travel = new
+			// ダイレクト
+			case DIRECT:
+//				travel = new TravelTailDownImpl(speed);
 				break;
 			default:
 				break;
@@ -138,8 +143,8 @@ public class StoryFactory {
 	 */
 	private static SectionSwitchingCondition createSwitchCondition(Section section) {
 
-		List<Detector> endDetectorList = createDetector(section.getEndCondition());
-		List<Detector> abnormalDetectorList = createDetector(section.getAbnormalCondition());
+		List<Detection> endDetectorList = createDetector(section.getEndCondition());
+		List<Detection> abnormalDetectorList = createDetector(section.getAbnormalCondition());
 
 		SectionSwitchingCondition switchCondition = new SectionSwitchingCondition(endDetectorList,
 				abnormalDetectorList);
@@ -149,36 +154,37 @@ public class StoryFactory {
 	/*
 	 * 検知器リスト製造
 	 */
-	private static List<Detector> createDetector(Condition condition) {
+	private static List<Detection> createDetector(Condition condition) {
 
-		List<Detector> detectorList = new ArrayList<>();
+		List<Detection> detectorList = new ArrayList<>();
 		// TODO コース情報作成の都合上、一旦Sectionの判定条件はリストでなく単一所持にしている
-
+		int blackline = 0;
 		// for (Condition condition : conditionList) {
-		Detector detector = null;
+		Detection detection = null;
 		switch (condition.getConditionType()) {
+		// ライン検知
 		case BLACK_DETECTION:
+			detection = new BlackLineDetection(blackline);
 			break;
-		case COLLISION_DETECTION:
-			detector = new CollisionSensor(condition.getConditionValue());
-			break;
-		case DISTANCE:
-			break;
-		case GRAY_DETECTION:
-			detector = new
-			break;
-		case OBSTACLES_DETECTION:
-			break;
-		case TAIL_ANGLE:
-			break;
-		case TIME:
-			break;
-		case WHITE_DURATION:
-			break;
+		// TODO 振動検知
+//		case COLLISION_DETECTION:
+//			detection = new CollisionSensor(condition.getConditionValue());
+//			break;
+		// TODO 障害物検知
+//		case DISTANCE:
+//			break;
+		// TODO 左車輪回転数検知
+//		case GRAY_DETECTION:
+//			detection = new
+//			break;
+		// TODO 右車輪回転数検知
+//			case GRAY_DETECTION:
+//				detection = new
+//				break;
 		default:
 			break;
 		}
-		detectorList.add(detector);
+		detectorList.add(detection);
 		// }
 
 		return detectorList;

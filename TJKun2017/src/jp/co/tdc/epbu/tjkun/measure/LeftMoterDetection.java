@@ -1,7 +1,5 @@
 package jp.co.tdc.epbu.tjkun.measure;
 
-import jp.co.tdc.epbu.tjkun.device.DeviceFactory;
-
 public class LeftMoterDetection implements Detection{
 
 	int leftMoterDetection = 0;
@@ -12,7 +10,7 @@ public class LeftMoterDetection implements Detection{
 
 	@Override
 	public boolean Notify() {
-		if (DeviceFactory.getInstance().getDrivingWheel().getLMotorCount() > leftMoterDetection) {
+		if (SectionRunActual.getInstance().getSectionLMotorCount() > leftMoterDetection) {
 			return true;
 		} else {
 			return false;

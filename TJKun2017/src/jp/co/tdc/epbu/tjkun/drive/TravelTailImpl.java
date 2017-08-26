@@ -11,12 +11,12 @@ public class TravelTailImpl implements Travel {
     private LightSensor lightSensor;
 
 
-	public int tail;
 	//private float THRESHOLD;
 	private Calibrater calibrater;
 	private WheelSpeed speed;
+	private int tailAngle;
 
-	public TravelTailImpl(WheelSpeed speed, int tail) {
+	public TravelTailImpl(WheelSpeed speed, int tailAngle) {
 
         DeviceFactory df = DeviceFactory.getInstance();
 
@@ -26,7 +26,7 @@ public class TravelTailImpl implements Travel {
 		this.speed = speed;
 		//this.THRESHOLD = (calibrater.blackBaseline() + calibrater.whiteBaseline() * 2) / 3.0F;
 		this.calibrater = Calibrater.getInstance();
-		this.tail = tail;
+		this.tailAngle = tailAngle;
 	}
 
 	public float getBrightnessValue() {
@@ -54,7 +54,7 @@ public class TravelTailImpl implements Travel {
 		int left = speed.getWheelSpeedScaleLeft();
 		int right = speed.getWheelSpeedScaleRight();
 
-		directControl.controlDirect(left, right, tail) ;
+		directControl.controlDirect(left, right, tailAngle) ;
 	}
 
 }

@@ -3,12 +3,13 @@
  */
 package jp.co.tdc.epbu.tjkun.section;
 
+import jp.co.tdc.epbu.tjkun.drive.WheelSpeed;
+
 /**
  * @author Takayuki
  *
  */
 public class Section {
-
 
 	private Action action;
 	private Condition endCondition;
@@ -75,5 +76,13 @@ public class Section {
 
 	public TravelType getTravelType() {
 		return action.getTravelType();
+	}
+
+	public WheelSpeed getSpeed() {
+		return action.getSpeed();
+	}
+
+	public int getTailAngle() {
+		return action.getTailAngle();
 	}
 }

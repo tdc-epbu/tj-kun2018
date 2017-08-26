@@ -6,11 +6,13 @@ import jp.co.tdc.epbu.tjkun.device.DeviceFactory;
 public class TravelSpinImpl implements Travel {
 
 	private WheelSpeed speed;
+	private int tailAngle;
 
     private BalancerControl balancerControl;
 
-	public TravelSpinImpl(WheelSpeed speed) {
+	public TravelSpinImpl(WheelSpeed speed, int tailAngle) {
 		this.speed = speed;
+		this.tailAngle = tailAngle;
 
 		balancerControl = DeviceFactory.getInstance().getBalancerControl();
 	}

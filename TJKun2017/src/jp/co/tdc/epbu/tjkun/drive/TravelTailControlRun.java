@@ -11,11 +11,11 @@ public class TravelTailControlRun implements Travel {
     private LightSensor lightSensor;
     private BalancerControl balancerControl;
 
-	public int tail;
 	private float THRESHOLD;
 	private WheelSpeed speed;
+	private int tailAngle;
 
-	public TravelTailControlRun(WheelSpeed speed, int tail) {
+	public TravelTailControlRun(WheelSpeed speed, int tailAngle) {
 		this.speed = speed;
 
 	      DeviceFactory df = DeviceFactory.getInstance();
@@ -25,14 +25,14 @@ public class TravelTailControlRun implements Travel {
 
 		Calibrater calibrater = Calibrater.getInstance();
 		this.THRESHOLD = (calibrater.blackBaseline() + calibrater.whiteBaseline()) / 2.0F;
-		this.tail = tail;
+		this.tailAngle = tailAngle;
 
 	}
 
 	public void travel() {
 		float forward = speed.getWheelSpeedScaleLeft();
 		float turn = jaggyTravel();
-		balancerControl.controlBalance(forward, turn, tail);
+		balancerControl.controlBalance(forward, turn, tailAngle);
 	}
 
 	/**
