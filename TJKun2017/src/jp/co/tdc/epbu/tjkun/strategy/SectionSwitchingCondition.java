@@ -5,7 +5,7 @@ package jp.co.tdc.epbu.tjkun.strategy;
 
 import java.util.List;
 
-import jp.co.tdc.epbu.tjkun.measure.Detector;
+import jp.co.tdc.epbu.tjkun.measure.Detection;
 
 /**
  * @author t2011002
@@ -13,10 +13,10 @@ import jp.co.tdc.epbu.tjkun.measure.Detector;
  */
 public class SectionSwitchingCondition {
 
-	private List<Detector> endDetectorList;
-	private List<Detector> abnormalDetectorList;
+	private List<Detection> endDetectorList;
+	private List<Detection> abnormalDetectorList;
 
-	public SectionSwitchingCondition(List<Detector> endDetectorList, List<Detector> abnormalDetectorList) {
+	public SectionSwitchingCondition(List<Detection> endDetectorList, List<Detection> abnormalDetectorList) {
 		this.endDetectorList = endDetectorList;
 		this.abnormalDetectorList = abnormalDetectorList;
 	}
