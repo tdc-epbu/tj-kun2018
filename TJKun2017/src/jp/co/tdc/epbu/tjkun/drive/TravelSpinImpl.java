@@ -1,21 +1,25 @@
 package jp.co.tdc.epbu.tjkun.drive;
 
-import jp.co.tdc.epbu.tjkun.device.EV3;
+import jp.co.tdc.epbu.tjkun.device.BalancerControl;
+import jp.co.tdc.epbu.tjkun.device.DeviceFactory;
 
 public class TravelSpinImpl implements Travel {
 
 	private WheelSpeed speed;
 
+    private BalancerControl balancerControl;
+
 	public TravelSpinImpl(WheelSpeed speed) {
 		this.speed = speed;
+
+		balancerControl = DeviceFactory.getInstance().getBalancerControl();
 	}
 
-	EV3 ev3 = EV3.getInstance();
 	public void travel() {
 		float forward = speed.getWheelSpeedScaleLeft();
 		float turn = 50.0F;
 		int tail = 0;
-		ev3.controlBalance(forward, turn ,tail);
+		balancerControl.controlBalance(forward, turn ,tail);
 	}
 
 }

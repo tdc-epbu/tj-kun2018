@@ -1,10 +1,12 @@
 package jp.co.tdc.epbu.tjkun.drive;
 
-import jp.co.tdc.epbu.tjkun.device.EV3;
+import jp.co.tdc.epbu.tjkun.device.DeviceFactory;
+import jp.co.tdc.epbu.tjkun.device.DirectControl;
 import lejos.utility.Delay;
 
 public class TravelTailDownImpl implements Travel {
-	EV3 ev3 = EV3.getInstance();
+
+    private DirectControl directControl;
 
 
 	int tail_up = 65;
@@ -14,6 +16,8 @@ public class TravelTailDownImpl implements Travel {
 
 	public TravelTailDownImpl(WheelSpeed speed) {
 		this.speed = speed;
+
+		directControl = DeviceFactory.getInstance().getDirectControl();
 	}
 
 	public void travel() {
@@ -32,7 +36,7 @@ public class TravelTailDownImpl implements Travel {
 //			return;
 //		}
 
-		ev3.controlDirect(0, 0, state) ;
+		directControl.controlDirect(0, 0, state) ;
 		Delay.msDelay(100);
 		if(state >= tail_up ) {
 			state--;

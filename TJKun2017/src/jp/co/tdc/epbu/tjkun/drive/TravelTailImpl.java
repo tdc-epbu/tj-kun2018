@@ -1,17 +1,28 @@
 package jp.co.tdc.epbu.tjkun.drive;
 
-import jp.co.tdc.epbu.tjkun.device.EV3;
+import jp.co.tdc.epbu.tjkun.device.DeviceFactory;
+import jp.co.tdc.epbu.tjkun.device.DirectControl;
+import jp.co.tdc.epbu.tjkun.device.LightSensor;
 import jp.co.tdc.epbu.tjkun.measure.Calibrater;
 
 public class TravelTailImpl implements Travel {
 
-	EV3 ev3 = EV3.getInstance();
+    private DirectControl directControl;
+    private LightSensor lightSensor;
+
+
 	public int tail;
 	//private float THRESHOLD;
 	private Calibrater calibrater;
 	private WheelSpeed speed;
 
 	public TravelTailImpl(WheelSpeed speed, int tail) {
+
+        DeviceFactory df = DeviceFactory.getInstance();
+
+        lightSensor = df.getLightSensor();
+        directControl = df.getDirectControl();
+
 		this.speed = speed;
 		//this.THRESHOLD = (calibrater.blackBaseline() + calibrater.whiteBaseline() * 2) / 3.0F;
 		this.calibrater = Calibrater.getInstance();
@@ -20,7 +31,7 @@ public class TravelTailImpl implements Travel {
 
 	public float getBrightnessValue() {
 
-		float temp = ev3.getBrightness();
+		float temp = lightSensor.getBrightness();
 
 		//LCD.drawString(Float.toString(temp), 0, 1);
 
@@ -43,7 +54,7 @@ public class TravelTailImpl implements Travel {
 		int left = speed.getWheelSpeedScaleLeft();
 		int right = speed.getWheelSpeedScaleRight();
 
-		ev3.controlDirect(left, right, tail) ;
+		directControl.controlDirect(left, right, tail) ;
 	}
 
 }
