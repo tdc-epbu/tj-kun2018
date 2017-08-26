@@ -1,7 +1,6 @@
 package jp.co.tdc.epbu.tjkun.drive;
 
 import jp.co.tdc.epbu.tjkun.device.EV3;
-import jp.co.tdc.epbu.tjkun.measure.Calibrater;
 
 public class TravelTailControlRun implements Travel {
 
@@ -9,15 +8,17 @@ public class TravelTailControlRun implements Travel {
 	EV3 ev3 = EV3.getInstance();
 	public int tail;
 	private float THRESHOLD;
+	private WheelSpeed speed;
 
-	public TravelTailControlRun(Calibrater calibrater, int tail) {
+	public TravelTailControlRun(WheelSpeed speed, int tail) {
+		this.speed = speed;
 
 		this.THRESHOLD = (calibrater.blackBaseline() + calibrater.whiteBaseline()) / 2.0F;
 		this.tail = tail;
 
 	}
 
-	public void travel(WheelSpeed speed) {
+	public void travel() {
 		float forward = speed.getWheelSpeedScaleLeft();
 		float turn = jaggyTravel();
 		ev3.controlBalance(forward, turn, tail);

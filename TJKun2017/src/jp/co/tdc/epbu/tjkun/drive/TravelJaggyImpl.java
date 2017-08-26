@@ -1,25 +1,25 @@
 package jp.co.tdc.epbu.tjkun.drive;
 
 import jp.co.tdc.epbu.tjkun.device.EV3;
-import jp.co.tdc.epbu.tjkun.measure.Calibrater;
 
 public class TravelJaggyImpl implements Travel {
 
 	EV3 ev3 = EV3.getInstance();
 	private static final float LIGHT_WHITE = 0.50F; // 白色のカラーセンサー輝度値
 	private static final float LIGHT_BLACK = 0.02F; // 黒色のカラーセンサー輝度値
+	private WheelSpeed speed;
 	// private static final float THRESHOLD = (LIGHT_WHITE+LIGHT_BLACK)/2.0F; //
 	// ライントレースの閾値
 
 	private float THRESHOLD;
 
-	public TravelJaggyImpl(Calibrater calibrater) {
-
+	public TravelJaggyImpl(WheelSpeed speed) {
+		this.speed = speed;
 		this.THRESHOLD = (calibrater.blackBaseline() + calibrater.whiteBaseline()) / 2.0F;
 
 	}
 
-	public void travel(WheelSpeed speed) {
+	public void travel() {
 		float forward = speed.getWheelSpeedScaleLeft();
 		float turn = jaggyTravel();
 		int tail = 0;

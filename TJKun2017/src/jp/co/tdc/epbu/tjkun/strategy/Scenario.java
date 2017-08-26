@@ -15,7 +15,7 @@ public abstract class Scenario {
 
 	private List<Travel> travelList;
 	private List<SectionSwitchingCondition> switchConditionList;
-	int sectionNo = 0;
+	private int sectionNo = 0;
 
 	public Scenario(List<Travel> travelList, List<SectionSwitchingCondition> SwitchConditionList) {
 		this.travelList = travelList;

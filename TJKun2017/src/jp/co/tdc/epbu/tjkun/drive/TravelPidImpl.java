@@ -14,6 +14,7 @@ public class TravelPidImpl implements Travel {
 	float diff[] = new float[2]; // 差分
 	float integral; // 積分
 	private Stopwatch stopwatch;
+	private WheelSpeed speed;
 	int maxPid = 60;
 
 
@@ -21,7 +22,8 @@ public class TravelPidImpl implements Travel {
 
 	private float passLight = 0;
 
-	public TravelPidImpl(Calibrater calibrater) {
+	public TravelPidImpl(WheelSpeed speed) {
+		this.speed = speed;
 
 		this.calibrater = calibrater;
 
@@ -42,7 +44,7 @@ public class TravelPidImpl implements Travel {
 
 
 
-	public void travel(WheelSpeed speed) {
+	public void travel() {
 		float forward = speed.getWheelSpeedScaleLeft();
 		float turn = CalcTurnValue(getBrightnessValue());
 		int tail = 0;
