@@ -10,10 +10,8 @@ import jp.co.tdc.epbu.tjkun.drive.Travel;
 import jp.co.tdc.epbu.tjkun.drive.TravelJaggyImpl;
 import jp.co.tdc.epbu.tjkun.drive.TravelPidImpl;
 import jp.co.tdc.epbu.tjkun.drive.TravelSpinImpl;
-import jp.co.tdc.epbu.tjkun.drive.WheelSpeed;
 import jp.co.tdc.epbu.tjkun.measure.BlackLineDetection;
 import jp.co.tdc.epbu.tjkun.measure.Detection;
-import jp.co.tdc.epbu.tjkun.section.Action;
 import jp.co.tdc.epbu.tjkun.section.Area;
 import jp.co.tdc.epbu.tjkun.section.Condition;
 import jp.co.tdc.epbu.tjkun.section.CourceType;
@@ -93,27 +91,21 @@ public class StoryFactory {
 	private static List<Travel> createTravelList(List<Section> sectionList) {
 
 		List<Travel> travelList = new ArrayList<>();
-		Action action = new Action();
-		WheelSpeed speed = action.getSpeed();
-		int tail = action.getTailAngle();
 
 		for (Section section : sectionList) {
 			Travel travel = null;
 			switch (section.getTravelType()) {
 			// ジグザグ走行
-			// TODO パラメータにtail追加
 			case JAGGY:
-				travel = new TravelJaggyImpl(speed);
+				travel = new TravelJaggyImpl(section.getSpeed(), section.getTailAngle());
 				break;
 			// PID走行
-			// TODO パラメータにtail追加
 			case PID:
-				travel = new TravelPidImpl(speed);
+				travel = new TravelPidImpl(section.getSpeed(), section.getTailAngle());
 				break;
 			// スピン
-			// TODO パラメータにtail追加
 			case SPIN:
-				travel = new TravelSpinImpl(speed);
+				travel = new TravelSpinImpl(section.getSpeed(), section.getTailAngle());
 				break;
 			// ライントレースOFF
 			case BALANCE:
