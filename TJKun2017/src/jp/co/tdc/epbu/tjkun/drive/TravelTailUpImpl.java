@@ -10,8 +10,9 @@ public class TravelTailUpImpl implements Travel {
     private BalancerControl balancerControl;
 
 	private WheelSpeed speed;
+	private int tailAngle;
 
-	public TravelTailUpImpl(WheelSpeed speed) {
+	public TravelTailUpImpl(WheelSpeed speed, int tailAngle) {
 
 
 	       DeviceFactory df = DeviceFactory.getInstance();
@@ -20,6 +21,7 @@ public class TravelTailUpImpl implements Travel {
 	        balancerControl = df.getBalancerControl();
 
 		this.speed = speed;
+		this.tailAngle = tailAngle;
 	}
 
 	public void travel() {

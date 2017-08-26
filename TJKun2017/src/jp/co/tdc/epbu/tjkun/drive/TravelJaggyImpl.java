@@ -15,20 +15,20 @@ public class TravelJaggyImpl implements Travel {
 	private static final float LIGHT_WHITE = 0.50F; // 白色のカラーセンサー輝度値
 	private static final float LIGHT_BLACK = 0.02F; // 黒色のカラーセンサー輝度値
 	private WheelSpeed speed;
+	private int tailAngle;
 	// private static final float THRESHOLD = (LIGHT_WHITE+LIGHT_BLACK)/2.0F; //
 	// ライントレースの閾値
 
 	private float THRESHOLD;
 
-	public TravelJaggyImpl(WheelSpeed speed) {
+	public TravelJaggyImpl(WheelSpeed speed,int tailAngle) {
 		this.speed = speed;
+		this.tailAngle = tailAngle;
 
 		DeviceFactory df = DeviceFactory.getInstance();
 
 		lightSensor = df.getLightSensor();
 		balancerControl = df.getBalancerControl();
-
-
 
 		Calibrater calibrater = Calibrater.getInstance();
 		this.THRESHOLD = (calibrater.blackBaseline() + calibrater.whiteBaseline()) / 2.0F;

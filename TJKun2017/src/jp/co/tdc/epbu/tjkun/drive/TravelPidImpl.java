@@ -19,14 +19,16 @@ public class TravelPidImpl implements Travel {
     float integral; // 積分
     private Stopwatch stopwatch;
     private WheelSpeed speed;
+    int tailAngle;
     int maxPid = 60;
 
     private Calibrater calibrater;
 
     private float passLight = 0;
 
-    public TravelPidImpl(WheelSpeed speed) {
+    public TravelPidImpl(WheelSpeed speed, int tailAngle) {
         this.speed = speed;
+		this.tailAngle = tailAngle;
 
         DeviceFactory df = DeviceFactory.getInstance();
 
