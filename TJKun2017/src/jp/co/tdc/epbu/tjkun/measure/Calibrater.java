@@ -1,9 +1,9 @@
 package jp.co.tdc.epbu.tjkun.measure;
 
+import jp.co.tdc.epbu.tjkun.device.EV3;
 import jp.co.tdc.epbu.tjkun.device.EV3Control;
 import lejos.hardware.lcd.LCD;
 import lejos.utility.Delay;
-
 
 /**
  * キャリブレーションのクラス<br>
@@ -13,63 +13,71 @@ import lejos.utility.Delay;
  */
 public class Calibrater {
 
-	private EV3Control ev3Control;
-	private Button button;
+    private EV3Control ev3Control;
+    private Button button;
 
-	private float blackBaseline;
-	private float whiteBaseline;
+    private float blackBaseline;
+    private float whiteBaseline;
 
-	private boolean resetFlag;
+    private boolean resetFlag;
 
-	public Calibrater(EV3Control ev3Control, Button button) {
+    private Calibrater() {
 
-		this.ev3Control = ev3Control;
-		this.button = button;
-	}
+        this.ev3Control = EV3.getInstance();
+        this.button = new Button(ev3Control);
+    }
 
-	public boolean calibration() {
+    private static Calibrater instance;
 
-		resetFlag  = false;
+    public static Calibrater getInstance() {
 
-		LCD.clear();
+        if (instance == null) {
+            instance = new Calibrater();
+        }
 
-		LCD.drawString("Get Black...  ", 0, 4);
+           return instance;
+    }
 
-		blackBaseline = getBrightnessForTouchWait();
-		LCD.drawString("Black:" + blackBaseline, 0, 5);
+    public boolean calibration() {
 
+        resetFlag = false;
 
-		LCD.drawString("Get White...  ", 0, 4);
+        LCD.clear();
 
+        LCD.drawString("Get Black...  ", 0, 4);
 
-		whiteBaseline = getBrightnessForTouchWait();
-		LCD.drawString("White:" + whiteBaseline, 0, 6);
+        blackBaseline = getBrightnessForTouchWait();
+        LCD.drawString("Black:" + blackBaseline, 0, 5);
 
-		LCD.drawString("Reset?", 0, 7);
-		while (button.touchStatus() != TouchStatus.Released) {
-			resetFlag = lejos.hardware.Button.UP.isDown();
-			Delay.msDelay(10);
-		}
+        LCD.drawString("Get White...  ", 0, 4);
 
+        whiteBaseline = getBrightnessForTouchWait();
+        LCD.drawString("White:" + whiteBaseline, 0, 6);
 
-		return resetFlag;
+        LCD.drawString("Reset?", 0, 7);
+        while (button.touchStatus() != TouchStatus.Released) {
+            resetFlag = lejos.hardware.Button.UP.isDown();
+            Delay.msDelay(10);
+        }
 
-	}
+        return resetFlag;
 
-	private float getBrightnessForTouchWait() {
+    }
 
-		while (button.touchStatus() != TouchStatus.Released) {
-			Delay.msDelay(10);
-		}
-		return ev3Control.getBrightness();
-	}
+    private float getBrightnessForTouchWait() {
 
-	public float blackBaseline() {
-		return blackBaseline;
+        while (button.touchStatus() != TouchStatus.Released) {
+            Delay.msDelay(10);
+        }
+        return ev3Control.getBrightness();
+    }
 
-	}
+    public float blackBaseline() {
+        return blackBaseline;
 
-	public float whiteBaseline() {
-		return whiteBaseline;
-	}
+    }
+
+    public float whiteBaseline() {
+        return whiteBaseline;
+    }
 }

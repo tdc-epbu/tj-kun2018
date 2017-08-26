@@ -319,4 +319,16 @@ public class EV3 implements Runnable, EV3Control {
 
 		return motorPortT.getTachoCount();
 	}
+
+    @Override
+    public void setMotorPower(int leftMotorPower, int rightMotorPower) {
+        // TODO 自動生成されたメソッド・スタブ
+
+    }
+
+    @Override
+    public void setAngle(int angle) {
+        // TODO 自動生成されたメソッド・スタブ
+
+    }
 }
