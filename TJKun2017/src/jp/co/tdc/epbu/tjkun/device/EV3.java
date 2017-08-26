@@ -23,7 +23,7 @@ import lejos.utility.Delay;
 /**
  * EV3way本体のモータとセンサーを扱うクラス。
  */
-public class EV3 implements Runnable, EV3Control {
+class EV3 implements Runnable, EV3Control {
 	public static final int TAIL_ANGLE_STAND_UP = 94; // 完全停止時の角度[度]
 	public static final int TAIL_ANGLE_DRIVE = 3; // バランス走行時の角度[度]
 
@@ -176,6 +176,7 @@ public class EV3 implements Runnable, EV3Control {
 	/**
 	 * センサー、モータの終了処理。
 	 */
+	@Override
 	public void close() {
 
 		motorPortL.close();
@@ -322,13 +323,9 @@ public class EV3 implements Runnable, EV3Control {
 
     @Override
     public void setMotorPower(int leftMotorPower, int rightMotorPower) {
-        // TODO 自動生成されたメソッド・スタブ
+        this.leftMotorPower =leftMotorPower;
+        this.rightMotorPower = rightMotorPower;
 
     }
 
-    @Override
-    public void setAngle(int angle) {
-        // TODO 自動生成されたメソッド・スタブ
-
-    }
 }

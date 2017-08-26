@@ -1,13 +1,24 @@
 package jp.co.tdc.epbu.tjkun.drive;
 
-import jp.co.tdc.epbu.tjkun.device.EV3;
+import jp.co.tdc.epbu.tjkun.device.BalancerControl;
+import jp.co.tdc.epbu.tjkun.device.DeviceFactory;
+import jp.co.tdc.epbu.tjkun.device.DirectControl;
 
 public class TravelTailUpImpl implements Travel {
-	EV3 ev3 = EV3.getInstance();
+
+    private DirectControl directControl;
+    private BalancerControl balancerControl;
 
 	private WheelSpeed speed;
 
 	public TravelTailUpImpl(WheelSpeed speed) {
+
+
+	       DeviceFactory df = DeviceFactory.getInstance();
+
+	       directControl = df.getDirectControl();
+	        balancerControl = df.getBalancerControl();
+
 		this.speed = speed;
 	}
 
@@ -15,9 +26,9 @@ public class TravelTailUpImpl implements Travel {
 		int tail_up = 66;
 		int tail_down = 90;
 		for (int i = tail_up; i >= tail_down; i++) {
-			ev3.controlDirect(0, 0, i) ;
+		    directControl.controlDirect(0, 0, i) ;
 		}
-		ev3.controlBalance(-10, 0, 0);
+		balancerControl.controlBalance(-10, 0, 0);
 	}
 
 }

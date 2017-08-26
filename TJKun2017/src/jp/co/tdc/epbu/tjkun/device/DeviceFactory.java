@@ -4,43 +4,50 @@ public class DeviceFactory {
 
     private EV3Control ev3;
 
-	private DeviceFactory() {
+    private DeviceFactory() {
 
-	    ev3 = EV3.getInstance();
-	}
+        ev3 = EV3.getInstance();
+    }
 
-	public static DeviceFactory getInstance() {
+    public static DeviceFactory getInstance() {
 
-		if (instance == null) {
-			instance = new DeviceFactory();
-		}
-		return instance;
-	}
+        if (instance == null) {
+            instance = new DeviceFactory();
+        }
+        return instance;
+    }
 
-	private static DeviceFactory instance;
+    private static DeviceFactory instance;
 
-	public DrivingWheel getDrivingWheel() {
-		return ev3;
-	}
+    public DrivingWheel getDrivingWheel() {
+        return ev3;
+    }
 
-	public LightSensor getLightSensor() {
-		return ev3;
-	}
+    public LightSensor getLightSensor() {
+        return ev3;
+    }
 
-	public Tail getTail() {
-		return ev3;
-	}
+    public Tail getTail() {
+        return ev3;
+    }
 
-	public UltrasonicSensor getUltrasonicSensor() {
-		return ev3;
-	}
+    public UltrasonicSensor getUltrasonicSensor() {
+        return ev3;
+    }
 
+    public TouchSensor getTouchSensor() {
+        return ev3;
+    }
 
-	public TouchSensor getTouchSensor() {
-		return ev3;
-	}
+    public BalancerControl getBalancerControl() {
+        return ev3;
+    }
 
-	public BalancerControl getBalancerControl() {
-		return ev3;
-	}
+    public DirectControl getDirectControl() {
+        return ev3;
+    }
+
+    public void close() {
+        ev3.close();
+    }
 }
