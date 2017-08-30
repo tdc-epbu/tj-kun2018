@@ -4,9 +4,9 @@ import jp.co.tdc.epbu.tjkun.device.DeviceFactory;
 
 public class VibrationDetection implements Detection{
 
-	int vibrationDetection = 0;
+	float vibrationDetection = 0;
 
-	public VibrationDetection(int vibration) {
+	public VibrationDetection(float vibration) {
 		this.vibrationDetection = vibration;
 	}
 
