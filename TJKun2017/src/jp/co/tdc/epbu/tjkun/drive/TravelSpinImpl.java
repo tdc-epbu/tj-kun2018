@@ -19,9 +19,8 @@ public class TravelSpinImpl implements Travel {
 
 	public void travel() {
 		float forward = speed.getWheelSpeedScaleLeft();
-		float turn = 50.0F;
-		int tail = 0;
-		balancerControl.controlBalance(forward, turn ,tail);
+		float turn = speed.getTurnSpeedScale();
+		balancerControl.controlBalance(forward, turn ,tailAngle);
 	}
 
 }

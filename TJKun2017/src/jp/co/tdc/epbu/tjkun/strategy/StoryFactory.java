@@ -7,13 +7,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jp.co.tdc.epbu.tjkun.drive.Travel;
+import jp.co.tdc.epbu.tjkun.drive.TravelBalanceImpl;
+import jp.co.tdc.epbu.tjkun.drive.TravelDirectImpl;
 import jp.co.tdc.epbu.tjkun.drive.TravelJaggyImpl;
 import jp.co.tdc.epbu.tjkun.drive.TravelPidImpl;
 import jp.co.tdc.epbu.tjkun.drive.TravelSpinImpl;
 import jp.co.tdc.epbu.tjkun.measure.BlackLineDetection;
 import jp.co.tdc.epbu.tjkun.measure.Detection;
 import jp.co.tdc.epbu.tjkun.measure.ElapsedTime;
+import jp.co.tdc.epbu.tjkun.measure.GrayLineDetection;
 import jp.co.tdc.epbu.tjkun.measure.LeftMoterDetection;
+import jp.co.tdc.epbu.tjkun.measure.ObstaclesDetection;
+import jp.co.tdc.epbu.tjkun.measure.TailDetection;
+import jp.co.tdc.epbu.tjkun.measure.VibrationDetection;
 import jp.co.tdc.epbu.tjkun.section.Area;
 import jp.co.tdc.epbu.tjkun.section.Condition;
 import jp.co.tdc.epbu.tjkun.section.CourceType;
@@ -111,11 +117,11 @@ public class StoryFactory {
 				break;
 			// ライントレースOFF
 			case BALANCE:
-				// travel = new TravelTailControlRun(speed, tail);
+				travel = new TravelBalanceImpl(section.getSpeed(), section.getTailAngle());
 				break;
 			// ダイレクト
 			case DIRECT:
-				// travel = new TravelTailDownImpl(speed);
+				travel = new TravelDirectImpl(section.getSpeed(), section.getTailAngle());
 				break;
 			default:
 				break;
@@ -146,10 +152,10 @@ public class StoryFactory {
 	private static SectionSwitchingCondition createSwitchCondition(Section section) {
 
 		List<Detection> endDetectorList = createDetector(section.getEndCondition());
-		//List<Detection> abnormalDetectorList = createDetector(section.getAbnormalCondition());
+		// List<Detection> abnormalDetectorList =
+		// createDetector(section.getAbnormalCondition());
 
-		SectionSwitchingCondition switchCondition = new SectionSwitchingCondition(endDetectorList,
-				null);
+		SectionSwitchingCondition switchCondition = new SectionSwitchingCondition(endDetectorList, null);
 		return switchCondition;
 	}
 
@@ -173,22 +179,17 @@ public class StoryFactory {
 		case DISTANCE:
 			detection = new LeftMoterDetection((int) condition.getConditionValue());
 			break;
-
-		// TODO 振動検知
-		// case COLLISION_DETECTION:
-		// detection = new CollisionSensor(condition.getConditionValue());
-		// break;
-		// TODO 障害物検知
-		// case DISTANCE:
-		// break;
-		// TODO 左車輪回転数検知
-		// case GRAY_DETECTION:
-		// detection = new
-		// break;
-		// TODO 右車輪回転数検知
-		// case GRAY_DETECTION:
-		// detection = new
-		// break;
+		case COLLISION_DETECTION:
+			detection = new VibrationDetection((int) condition.getConditionValue());
+			break;
+		case OBSTACLES_DETECTION:
+			detection = new ObstaclesDetection((int) condition.getConditionValue());
+			break;
+		case GRAY_DETECTION:
+			detection = new GrayLineDetection((int) condition.getConditionValue());
+			break;
+		case TAIL_ANGLE:
+			detection = new TailDetection((int) condition.getConditionValue());
 		default:
 			break;
 		}

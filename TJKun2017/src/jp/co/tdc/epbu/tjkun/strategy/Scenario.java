@@ -7,6 +7,7 @@ import java.util.List;
 
 import jp.co.tdc.epbu.tjkun.drive.Travel;
 import jp.co.tdc.epbu.tjkun.measure.SectionRunActual;
+import lejos.hardware.Sound;
 
 /**
  * @author t2011002
@@ -28,11 +29,13 @@ public abstract class Scenario {
 		// 区間計測の開始
 		SectionRunActual.getInstance().start();
 
+		Sound.beep();
 		while(true){
 			travelList.get(sectionNo).travel();
 
 			if(switchConditionList.get(sectionNo).notifyEndCondition()){
 				sectionNo++;
+				Sound.twoBeeps();
 				if(switchConditionList.size() <= sectionNo) break;
 				// 区間が変更されたため、再度区間計測の開始
 				SectionRunActual.getInstance().start();

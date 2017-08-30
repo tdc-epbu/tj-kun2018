@@ -52,9 +52,8 @@ public class TravelPidImpl implements Travel {
     public void travel() {
         float forward = speed.getWheelSpeedScaleLeft();
         float turn = CalcTurnValue(getBrightnessValue());
-        int tail = 0;
 
-        balancerControl.controlBalance(forward, turn, tail);
+        balancerControl.controlBalance(forward, turn, tailAngle);
     }
 
     public float getBrightnessValue() {

@@ -33,9 +33,11 @@ public class SectionSwitchingCondition {
 
 	public boolean notifyAbnormalCondition() {
 
-		for (Detection abnormalDetector : abnormalDetectorList) {
-			if(abnormalDetector.Notify()) {
-				return true;
+		if (abnormalDetectorList != null && abnormalDetectorList.size() > 0) {
+			for (Detection abnormalDetector : abnormalDetectorList) {
+				if(abnormalDetector.Notify()) {
+					return true;
+				}
 			}
 		}
 		return false;

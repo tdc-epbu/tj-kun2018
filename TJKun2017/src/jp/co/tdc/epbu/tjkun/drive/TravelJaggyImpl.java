@@ -11,9 +11,6 @@ public class TravelJaggyImpl implements Travel {
 	private LightSensor lightSensor;
 	private BalancerControl balancerControl;
 
-
-	private static final float LIGHT_WHITE = 0.50F; // 白色のカラーセンサー輝度値
-	private static final float LIGHT_BLACK = 0.02F; // 黒色のカラーセンサー輝度値
 	private WheelSpeed speed;
 	private int tailAngle;
 	// private static final float THRESHOLD = (LIGHT_WHITE+LIGHT_BLACK)/2.0F; //
@@ -38,8 +35,7 @@ public class TravelJaggyImpl implements Travel {
 	public void travel() {
 		float forward = speed.getWheelSpeedScaleLeft();
 		float turn = jaggyTravel();
-		int tail = 0;
-		balancerControl.controlBalance(forward, turn, tail);
+		balancerControl.controlBalance(forward, turn, tailAngle);
 	}
 
 	/**
