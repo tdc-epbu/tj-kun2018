@@ -19,10 +19,9 @@ public class TravelJaggyImpl implements Travel {
 
 	}
 
-	public void travel(WheelSpeed speed) {
+	public void travel(WheelSpeed speed,int tail) {
 		float forward = speed.getWheelSpeedScaleLeft();
 		float turn = jaggyTravel();
-		int tail = 0;
 		ev3.controlBalance(forward, turn, tail);
 	}
 
