@@ -21,24 +21,18 @@ public class Section {
 
 	private Condition endCondition;
 
-	private Condition abnormalCondition;
-
 	private SectionRunActual sectionRunActual;
 
-	public Section(WheelSpeed wheelSpeed, TravelType travelType, Condition endCondition, Condition abnormalCondition){
+	private int tail;
+
+	public Section(WheelSpeed wheelSpeed, TravelType travelType, Condition endCondition, int tail){
 		this.wheelSpeed = wheelSpeed;
 		this.travelType = travelType;
 		this.endCondition =endCondition;
-		this.abnormalCondition = abnormalCondition;
+		this.tail = tail;
 		this.sectionRunActual = new SectionRunActual(EV3.getInstance());
 	}
 
-	/**
-	 * 異常値を判定する
-	 */
-	public boolean judgeAbnormal(){
-		return sectionRunActual.notify(abnormalCondition);
-	}
 
 	/**
 	 * 区間の終了を判定する
@@ -59,5 +53,9 @@ public class Section {
 
 	public TravelType getTravelType() {
 		return travelType;
+	}
+
+	public int getTail() {
+		return tail;
 	}
 }

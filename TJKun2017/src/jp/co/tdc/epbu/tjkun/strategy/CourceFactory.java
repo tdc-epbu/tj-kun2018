@@ -146,29 +146,31 @@ public class CourceFactory {
 		//尻尾下ろし
 		WheelSpeed speed2 = new WheelSpeed(-30, -30);
 		Condition condition2 = new Condition(ConditionType.TIME, 500);
-		sectionList.add(new Section(speed2, TravelType.TAILCONTROL, condition2, null));
+		sectionList.add(new Section(speed2, TravelType.BALANCE, condition2, null));
 		//尻尾下ろし
 		WheelSpeed speed2_2 = new WheelSpeed(0, 0);
-		Condition condition2_2 = new Condition(ConditionType.TAIL_ANGLE, 85);
-		sectionList.add(new Section(speed2_2, TravelType.TAILDOWN, condition2_2, null));
+		Condition condition2_2 = new Condition(ConditionType.TAIL_ANGLE, 93);
+		sectionList.add(new Section(speed2_2, TravelType.DIRECT, condition2_2, null));
 
+		condition2_2 = new Condition(ConditionType.TAIL_ANGLE, 88);
+		sectionList.add(new Section(speed2_2, TravelType.DIRECT, condition2_2, null));
 		condition2_2 = new Condition(ConditionType.TAIL_ANGLE, 82);
-		sectionList.add(new Section(speed2_2, TravelType.TAILDOWN, condition2_2, null));
+		sectionList.add(new Section(speed2_2, TravelType.DIRECT, condition2_2, null));
 		condition2_2 = new Condition(ConditionType.TAIL_ANGLE, 78);
-		sectionList.add(new Section(speed2_2, TravelType.TAILDOWN, condition2_2, null));
+		sectionList.add(new Section(speed2_2, TravelType.DIRECT, condition2_2, null));
 		condition2_2 = new Condition(ConditionType.TAIL_ANGLE, 75);
-		sectionList.add(new Section(speed2_2, TravelType.TAILDOWN, condition2_2, null));
+		sectionList.add(new Section(speed2_2, TravelType.DIRECT, condition2_2, null));
 		condition2_2 = new Condition(ConditionType.TAIL_ANGLE, 73);
-		sectionList.add(new Section(speed2_2, TravelType.TAILDOWN, condition2_2, null));
+		sectionList.add(new Section(speed2_2, TravelType.DIRECT, condition2_2, null));
 
 		//前進
 		WheelSpeed speed3 = new WheelSpeed(20, 20);
 		Condition condition3 = new Condition(ConditionType.DISTANCE, 350);
-		sectionList.add(new Section(speed3, TravelType.TAIL, condition3, null));
+		sectionList.add(new Section(speed3, TravelType.DIRECT, condition3, null));
 		//後退
 		WheelSpeed speed4 = new WheelSpeed(-20, -21);
 		Condition condition4 = new Condition(ConditionType.DISTANCE, 480);
-		sectionList.add(new Section(speed4, TravelType.TAIL, condition4, null));
+		sectionList.add(new Section(speed4, TravelType.DIRECT, condition4, null));
 //		WheelSpeed speed4 = new WheelSpeed(50, -50);
 //		Condition condition4 = new Condition(ConditionType.DISTANCE, 250);
 //		sectionList.add(new Section(speed4, TravelType.TAIL, condition4, null));
@@ -183,11 +185,11 @@ public class CourceFactory {
 		//前進(車庫まで)
 		WheelSpeed speed7 = new WheelSpeed(20, 20);
 		Condition condition7 = new Condition(ConditionType.DISTANCE, 1300);
-		sectionList.add(new Section(speed7, TravelType.TAIL, condition7, null));
+		sectionList.add(new Section(speed7, TravelType.DIRECT, condition7, null));
 		//ストップ
 		WheelSpeed speed8 = new WheelSpeed(0, 0);
 		Condition condition8 = new Condition(ConditionType.DISTANCE, 6000);
-		sectionList.add(new Section(speed8, TravelType.TAIL, condition8, null));
+		sectionList.add(new Section(speed8, TravelType.DIRECT, condition8, null));
 		//ストップ
 		WheelSpeed speed9 = new WheelSpeed(0, 0);
 		Condition condition9 = new Condition(ConditionType.TIME, 5000);
@@ -203,27 +205,27 @@ public class CourceFactory {
 		//尻尾下ろし
 		WheelSpeed speed2 = new WheelSpeed(-30, -30);
 		Condition condition2 = new Condition(ConditionType.TIME, 500);
-		sectionList.add(new Section(speed2, TravelType.TAILCONTROL, condition2, null));
+		sectionList.add(new Section(speed2, TravelType.BALANCE, condition2, null));
 		//尻尾下ろし
 		WheelSpeed speed2_2 = new WheelSpeed(0, 0);
 		Condition condition2_2 = new Condition(ConditionType.TAIL_ANGLE, 80);
-		sectionList.add(new Section(speed2_2, TravelType.TAILDOWN, condition2_2, null));
+		sectionList.add(new Section(speed2_2, TravelType.DIRECT, condition2_2, null));
 
 		condition2_2 = new Condition(ConditionType.TAIL_ANGLE, 78);
-		sectionList.add(new Section(speed2_2, TravelType.TAILDOWN, condition2_2, null));
+		sectionList.add(new Section(speed2_2, TravelType.DIRECT, condition2_2, null));
 		condition2_2 = new Condition(ConditionType.TAIL_ANGLE, 75);
-		sectionList.add(new Section(speed2_2, TravelType.TAILDOWN, condition2_2, null));
+		sectionList.add(new Section(speed2_2, TravelType.DIRECT, condition2_2, null));
 		condition2_2 = new Condition(ConditionType.TAIL_ANGLE, 73);
-		sectionList.add(new Section(speed2_2, TravelType.TAILDOWN, condition2_2, null));
+		sectionList.add(new Section(speed2_2, TravelType.DIRECT, condition2_2, null));
 
 		//前進(車庫まで)
 		WheelSpeed speed7 = new WheelSpeed(20, 20);
 		Condition condition7 = new Condition(ConditionType.DISTANCE, 150);
-		sectionList.add(new Section(speed7, TravelType.TAIL, condition7, null));
+		sectionList.add(new Section(speed7, TravelType.DIRECT, condition7, null));
 		//ストップ
 		WheelSpeed speed8 = new WheelSpeed(0, 0);
 		Condition condition8 = new Condition(ConditionType.DISTANCE, 6000);
-		sectionList.add(new Section(speed8, TravelType.TAIL, condition8, null));
+		sectionList.add(new Section(speed8, TravelType.DIRECT, condition8, null));
 
 		return sectionList;
 	}

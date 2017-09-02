@@ -88,7 +88,7 @@ public class start implements Runnable {
 			// Delay.msDelay(4);
 			// }
 
-			EV3.getInstance().controlBalance(2, 2, 90);
+			EV3.getInstance().controlBalance(2, 0, 95);
 			Delay.msDelay(100);
 
 			futureDrive = scheduler.scheduleAtFixedRate(this, 0, 10, TimeUnit.MILLISECONDS);

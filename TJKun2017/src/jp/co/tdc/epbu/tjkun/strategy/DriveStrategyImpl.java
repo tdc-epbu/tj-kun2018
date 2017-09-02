@@ -6,9 +6,7 @@ package jp.co.tdc.epbu.tjkun.strategy;
 import jp.co.tdc.epbu.tjkun.drive.Travel;
 import jp.co.tdc.epbu.tjkun.drive.TravelJaggyImpl;
 import jp.co.tdc.epbu.tjkun.drive.TravelPidImpl;
-import jp.co.tdc.epbu.tjkun.drive.TravelTailControlRun;
-import jp.co.tdc.epbu.tjkun.drive.TravelTailDownImpl;
-import jp.co.tdc.epbu.tjkun.drive.TravelTailImpl;
+import jp.co.tdc.epbu.tjkun.drive.TravelSpinImpl;
 import jp.co.tdc.epbu.tjkun.measure.Calibrater;
 import jp.co.tdc.epbu.tjkun.section.Course;
 import jp.co.tdc.epbu.tjkun.section.Section;
@@ -23,18 +21,18 @@ public class DriveStrategyImpl implements DriveStrategy {
 
 	private Travel travel;
 	private Travel jaggy;
-	private Travel tail;
-	private Travel taildown;
-	private Travel tailControl;
+	private Travel spin;
+	private Travel balance;
+	private Travel direct;
 
 	public DriveStrategyImpl(Calibrater calibrater) {
 
 		this.calibrater = calibrater;
 		travel = new TravelPidImpl(this.calibrater);
 		jaggy = new TravelJaggyImpl(this.calibrater);
-		tail = new TravelTailImpl(this.calibrater, 73);
-		taildown = new TravelTailDownImpl(this.calibrater);
-		tailControl = new TravelTailControlRun(this.calibrater, 90);
+		spin = new TravelSpinImpl(this.calibrater);
+		balance = new TravelBalanceImpl(this.calibrater);
+		direct = new TravelDirectImpl(this.calibrater);
 
 
 		//sw = new Stopwatch();
@@ -62,14 +60,14 @@ public class DriveStrategyImpl implements DriveStrategy {
 			case JAGGY:
 				jaggy.travel(section.getWheelspeed());
 				break;
-			case TAIL:
-				tail.travel(section.getWheelspeed());
+			case SPIN:
+				spin.travel(section.getWheelspeed());
 				break;
-			case TAILCONTROL:
-				tailControl.travel(section.getWheelspeed());
+			case BALANCE:
+				balance.travel(section.getWheelspeed());
 				break;
-			case TAILDOWN:
-				taildown.travel(section.getWheelspeed());
+			case DIRECT:
+				direct.travel(section.getWheelspeed());
 				break;
 			default:
 			}
