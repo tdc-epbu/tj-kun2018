@@ -10,9 +10,11 @@ public class TravelTailControlRun implements Travel {
 	public int tail;
 	private float THRESHOLD;
 
+
+
 	public TravelTailControlRun(Calibrater calibrater, int tail) {
 
-		this.THRESHOLD = (calibrater.blackBaseline() + calibrater.whiteBaseline()) / 2.0F;
+		this.THRESHOLD = (calibrater.blackBaseline() + 2* calibrater.whiteBaseline()) / 3.0F;
 		this.tail = tail;
 
 	}
@@ -28,9 +30,9 @@ public class TravelTailControlRun implements Travel {
 	 */
 	public float jaggyTravel() {
 		if (ev3.getBrightness() > THRESHOLD) {
-			return 20.0F; // 右旋回命令
+			return -20.0F; // 右旋回命令
 		} else {
-			return -20.0F; // 左旋回命令
+			return 20.0F; // 左旋回命令
 		}
 	}
 

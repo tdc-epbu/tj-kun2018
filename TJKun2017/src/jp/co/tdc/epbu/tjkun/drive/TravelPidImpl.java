@@ -7,9 +7,9 @@ import lejos.utility.Stopwatch;
 public class TravelPidImpl implements Travel {
 
 	EV3 ev3 = EV3.getInstance();
-	float P_GAIN = 0.9F; // Kp 0.6～0.95(推薦値)
-	float I_GAIN = 0.0F; // Ki 0.6～0.7(推薦値)
-	float D_GAIN = 0.3F; // Kd 0.3～0.45(推薦値)
+	float P_GAIN = -0.9F; // Kp 0.6～0.95(推薦値)
+	float I_GAIN = -0.0F; // Ki 0.6～0.7(推薦値)
+	float D_GAIN = -0.3F; // Kd 0.3～0.45(推薦値)
 	float targetLight; // 目標値
 	float diff[] = new float[2]; // 差分
 	float integral; // 積分
@@ -25,7 +25,7 @@ public class TravelPidImpl implements Travel {
 
 		this.calibrater = calibrater;
 
-		this.targetLight = 60;
+		this.targetLight = 70;
 		this.integral = 0;
 		this.diff[0] = 0;
 		this.diff[1] = 0;

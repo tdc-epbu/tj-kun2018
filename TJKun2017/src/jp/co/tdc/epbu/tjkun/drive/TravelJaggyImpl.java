@@ -31,9 +31,9 @@ public class TravelJaggyImpl implements Travel {
 	 */
 	public float jaggyTravel() {
 		if (ev3.getBrightness() > THRESHOLD) {
-			return 50.0F; // 右旋回命令
+			return 40.0F; // 右旋回命令
 		} else {
-			return -50.0F; // 左旋回命令
+			return -40.0F; // 左旋回命令
 		}
 	}
 

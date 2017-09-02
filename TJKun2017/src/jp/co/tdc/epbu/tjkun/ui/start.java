@@ -61,7 +61,7 @@ public class start implements Runnable {
 
 			driveStrategy = new DriveStrategyImpl(calibrater);
 
-			cource = CourceFactory.create(CourceType.LEFT2017);
+			cource = CourceFactory.create(CourceType.RIGHT2017);
 
 			// PIDDriver pidDriver = new PIDDriver(ev3, calibrater);
 
