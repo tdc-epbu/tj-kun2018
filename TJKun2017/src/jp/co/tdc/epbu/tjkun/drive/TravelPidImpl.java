@@ -57,7 +57,7 @@ public class TravelPidImpl implements Travel {
 		//LCD.drawString(Float.toString(temp), 0, 1);
 
 		return (((temp - calibrater.blackBaseline()) / (calibrater.whiteBaseline() - calibrater.blackBaseline()))
-				* 100.0f);
+				* -100.0f);
 	}
 
 	/**
