@@ -4,6 +4,8 @@
 package jp.co.tdc.epbu.tjkun.strategy;
 
 import jp.co.tdc.epbu.tjkun.drive.Travel;
+import jp.co.tdc.epbu.tjkun.drive.TravelBalanceImpl;
+import jp.co.tdc.epbu.tjkun.drive.TravelDirectImpl;
 import jp.co.tdc.epbu.tjkun.drive.TravelJaggyImpl;
 import jp.co.tdc.epbu.tjkun.drive.TravelPidImpl;
 import jp.co.tdc.epbu.tjkun.drive.TravelSpinImpl;
@@ -30,9 +32,9 @@ public class DriveStrategyImpl implements DriveStrategy {
 		this.calibrater = calibrater;
 		travel = new TravelPidImpl(this.calibrater);
 		jaggy = new TravelJaggyImpl(this.calibrater);
-		spin = new TravelSpinImpl(this.calibrater);
-		balance = new TravelBalanceImpl(this.calibrater);
-		direct = new TravelDirectImpl(this.calibrater);
+		spin = new TravelSpinImpl();
+		balance = new TravelBalanceImpl();
+		direct = new TravelDirectImpl();
 
 
 		//sw = new Stopwatch();
