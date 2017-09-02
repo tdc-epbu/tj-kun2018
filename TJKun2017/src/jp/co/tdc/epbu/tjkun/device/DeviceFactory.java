@@ -12,7 +12,7 @@ public class DeviceFactory {
 
         ev3 = EV3.getInstance();
 
-        TJScheduler.getInstance().addFuture(ev3, 0, 4, TimeUnit.MILLISECONDS);
+        TJScheduler.getInstance().addFuture(ev3, 0, TimeUnit.MILLISECONDS);
     }
 
     public static DeviceFactory getInstance() {

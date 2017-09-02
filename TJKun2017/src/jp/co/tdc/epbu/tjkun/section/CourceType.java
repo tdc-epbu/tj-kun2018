@@ -14,6 +14,7 @@ public enum CourceType {
 	STAIRS,
 	GATE,
 	LEFT_GARAGE,
-	RIGHT_GARAGE;
+	RIGHT_GARAGE,
+	TEST;
 
 }

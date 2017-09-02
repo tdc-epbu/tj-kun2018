@@ -35,7 +35,7 @@ class EV3 implements EV3Control {
 	private static final Port SENSORPORT_SONAR = SensorPort.S2; // 超音波センサーポート
 	private static final Port SENSORPORT_COLOR = SensorPort.S3; // カラーセンサーポート
 	private static final Port SENSORPORT_GYRO = SensorPort.S4; // ジャイロセンサーポート
-	private static final float GYRO_OFFSET = 0.0F; // ジャイロセンサーオフセット値
+	private static final float GYRO_OFFSET = -5.0F; // ジャイロセンサーオフセット値
 	// private static final float LIGHT_WHITE = 0.4F; // 白色のカラーセンサー輝度値
 	// private static final float LIGHT_BLACK = 0.0F; // 黒色のカラーセンサー輝度値
 	// private static final float SONAR_ALERT_DISTANCE = 0.3F; //
@@ -132,7 +132,6 @@ class EV3 implements EV3Control {
 		rate = gyro.getRateMode(); // 角速度検出モード
 		sampleGyro = new float[rate.sampleSize()];
 
-
 	}
 
 	/**
@@ -185,7 +184,6 @@ class EV3 implements EV3Control {
 		colorSensor.setFloodlight(false);
 		sonar.disable();
 
-
 	}
 
 	/**
@@ -194,7 +192,7 @@ class EV3 implements EV3Control {
 	 * @return true ならタッチセンサーが押された。
 	 */
 	public final boolean touchSensorIsPressed() {
-		//touchMode.fetchSample(sampleTouch, 0);
+		// touchMode.fetchSample(sampleTouch, 0);
 		return ((int) sampleTouch[0] != 0);
 	}
 
@@ -248,7 +246,7 @@ class EV3 implements EV3Control {
 	 * @return 輝度値。
 	 */
 	public final float getBrightness() {
-		//redMode.fetchSample(sampleLight, 0);
+		// redMode.fetchSample(sampleLight, 0);
 		return sampleLight[0];
 	}
 
@@ -258,7 +256,7 @@ class EV3 implements EV3Control {
 	 * @return 角速度。
 	 */
 	public final float getGyroValue() {
-		//rate.fetchSample(sampleGyro, 0);
+		// rate.fetchSample(sampleGyro, 0);
 		// leJOS ではジャイロセンサーの角速度値が正負逆になっているので、
 		// 倒立振子ライブラリの仕様に合わせる。
 		return -sampleGyro[0];
@@ -266,38 +264,44 @@ class EV3 implements EV3Control {
 
 	@Override
 	public void run() {
+		while (true) {
+			long time = System.currentTimeMillis();
+			if (++driveCallCounter >= 40 / 4) { // 約40msごとに障害物検知
+				distanceMode.fetchSample(sampleDistance, 0);
+				sonarDistance = sampleDistance[0];
+				driveCallCounter = 0;
+			}
 
-		if (++driveCallCounter >= 40 / 4) { // 約40msごとに障害物検知
-			distanceMode.fetchSample(sampleDistance, 0);
-			sonarDistance = sampleDistance[0];
-			driveCallCounter = 0;
+			redMode.fetchSample(sampleLight, 0);
+			touchMode.fetchSample(sampleTouch, 0);
+			rate.fetchSample(sampleGyro, 0);
+
+			if (balance) {
+				float gyroNow = getGyroValue(); // ジャイロセンサー値
+				int thetaL = motorPortL.getTachoCount(); // 左モータ回転角度
+				int thetaR = motorPortR.getTachoCount(); // 右モータ回転角度
+				int battery = Battery.getVoltageMilliVolt(); // バッテリー電圧[mV]
+				Balancer.control(forward, turn, gyroNow, GYRO_OFFSET, thetaL, thetaR, battery); // 倒立振子制御
+				motorPortL.controlMotor(Balancer.getPwmL(), 1); // 左モータPWM出力セット
+				motorPortR.controlMotor(Balancer.getPwmR(), 1); // 右モータPWM出力セット
+			} else {
+				motorPortL.controlMotor(this.leftMotorPower, 1); // 左モータPWM出力セット
+				motorPortR.controlMotor(this.rightMotorPower, 1); // 右モータPWM出力セット
+			}
+
+			ev3.controlTail(tail);
+
+			time = System.currentTimeMillis() - time;
+			if (time < 4) {
+				Delay.msDelay(4 - time);
+			}
 		}
-
-		redMode.fetchSample(sampleLight, 0);
-		touchMode.fetchSample(sampleTouch, 0);
-		rate.fetchSample(sampleGyro, 0);
-
-
-		if (balance) {
-			float gyroNow = getGyroValue(); // ジャイロセンサー値
-			int thetaL = motorPortL.getTachoCount(); // 左モータ回転角度
-			int thetaR = motorPortR.getTachoCount(); // 右モータ回転角度
-			int battery = Battery.getVoltageMilliVolt(); // バッテリー電圧[mV]
-			Balancer.control(forward, turn, gyroNow, GYRO_OFFSET, thetaL, thetaR, battery); // 倒立振子制御
-			motorPortL.controlMotor(Balancer.getPwmL(), 1); // 左モータPWM出力セット
-			motorPortR.controlMotor(Balancer.getPwmR(), 1); // 右モータPWM出力セット
-		} else {
-			motorPortL.controlMotor(this.leftMotorPower, 1); // 左モータPWM出力セット
-			motorPortR.controlMotor(this.rightMotorPower, 1); // 右モータPWM出力セット
-		}
-
-		ev3.controlTail(tail);
 	}
 
 	@Override
 	public void controlDirect(int left, int right, int tail) {
 
-		this.leftMotorPower =left;
+		this.leftMotorPower = left;
 		this.rightMotorPower = right;
 
 		this.tail = tail;
@@ -323,11 +327,11 @@ class EV3 implements EV3Control {
 		return motorPortT.getTachoCount();
 	}
 
-    @Override
-    public void setMotorPower(int leftMotorPower, int rightMotorPower) {
-        this.leftMotorPower =leftMotorPower;
-        this.rightMotorPower = rightMotorPower;
+	@Override
+	public void setMotorPower(int leftMotorPower, int rightMotorPower) {
+		this.leftMotorPower = leftMotorPower;
+		this.rightMotorPower = rightMotorPower;
 
-    }
+	}
 
 }

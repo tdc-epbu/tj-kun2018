@@ -9,43 +9,49 @@ import java.util.concurrent.TimeUnit;
 
 public class TJScheduler {
 
-    private List<ScheduledFuture<?>> futureList;
+	private List<ScheduledFuture<?>> futureList;
 
-    private TJScheduler() {
+	private TJScheduler() {
 
-        scheduler = Executors.newScheduledThreadPool(3);
-        futureList = new ArrayList<ScheduledFuture<?>>();
-    }
+		scheduler = Executors.newScheduledThreadPool(3);
+		futureList = new ArrayList<ScheduledFuture<?>>();
+	}
 
-    private static TJScheduler instance;
+	private static TJScheduler instance;
 
-    private ScheduledExecutorService scheduler;
+	private ScheduledExecutorService scheduler;
 
-    public static TJScheduler getInstance() {
+	public static TJScheduler getInstance() {
 
-        if (instance == null) {
-            instance = new TJScheduler();
-        }
+		if (instance == null) {
+			instance = new TJScheduler();
+		}
 
-        return instance;
-    }
+		return instance;
+	}
 
-    public void addFuture(Runnable command, long initialDelay, long period, TimeUnit unit) {
+	public void addFuture(Runnable command, long initialDelay, long period, TimeUnit unit) {
 
-        futureList.add(scheduler.scheduleAtFixedRate(command, initialDelay, period, unit));
+		futureList.add(scheduler.scheduleAtFixedRate(command, initialDelay, period, unit));
 
-    }
+	}
 
-    public void close() {
+	public void addFuture(Runnable command, long delay, TimeUnit unit) {
 
-        for (ScheduledFuture<?> future : futureList) {
+		futureList.add(scheduler.schedule(command, delay, unit));
 
-            if (future != null) {
-                future.cancel(true);
-            }
-        }
+	}
 
-        scheduler.shutdownNow();
-    }
+	public void close() {
+
+		for (ScheduledFuture<?> future : futureList) {
+
+			if (future != null) {
+				future.cancel(true);
+			}
+		}
+
+		scheduler.shutdownNow();
+	}
 
 }

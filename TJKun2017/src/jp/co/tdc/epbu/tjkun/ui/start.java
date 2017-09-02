@@ -62,7 +62,7 @@ public class start implements Runnable {
         driveStrategy = new DriveStrategyImpl();
 
         //cource = CourceFactory.create(CourceType.LEFT);
-        story = StoryFactory.create(CourceType.LEFT);
+        story = StoryFactory.create(CourceType.TEST);
 
         // PIDDriver pidDriver = new PIDDriver(ev3, calibrater);
 
@@ -71,7 +71,7 @@ public class start implements Runnable {
             Delay.msDelay(10);
         }
 
-        deviceFactory.getDeviceControl().reset();
+        //deviceFactory.getDeviceControl().reset();
         Sound.beep();
 
         tjScheduler.addFuture(RemoteTask.getInstance(), 0, 500, TimeUnit.MILLISECONDS);
@@ -89,10 +89,10 @@ public class start implements Runnable {
         // Delay.msDelay(4);
         // }
 
-        deviceFactory.getBalancerControl().controlBalance(2, 2, 90);
+        deviceFactory.getBalancerControl().controlBalance(0, 0, 0);
         Delay.msDelay(100);
 
-        tjScheduler.addFuture(this, 0, 10, TimeUnit.MILLISECONDS);
+        tjScheduler.addFuture(this, 0, TimeUnit.MILLISECONDS);
 
         while (button.touchStatus() != TouchStatus.Released
                 && !RemoteTask.getInstance().checkRemoteCommand(RemoteTask.REMOTE_COMMAND_STOP)) {
@@ -105,11 +105,11 @@ public class start implements Runnable {
         // DriveStrategy drivestrategy = new DriveStrategyImpl();
         // drivestrategy.operate();
 
-        while (button.touchStatus() != TouchStatus.Released
-                && !RemoteTask.getInstance().checkRemoteCommand(RemoteTask.REMOTE_COMMAND_STOP)) {
-            endFlag = lejos.hardware.Button.DOWN.isDown();
-            Delay.msDelay(250);
-        }
+//        while (button.touchStatus() != TouchStatus.Released
+//                && !RemoteTask.getInstance().checkRemoteCommand(RemoteTask.REMOTE_COMMAND_STOP)) {
+//            endFlag = lejos.hardware.Button.DOWN.isDown();
+//            Delay.msDelay(250);
+//        }
 
     }
 
@@ -124,16 +124,16 @@ public class start implements Runnable {
 
             }
 
-            while (true) {
+            //while (true) {
 
                 this.starter();
 
                 if (endFlag) {
-                    break;
+                   // break;
                 }
 
                 LCD.clear();
-            }
+            //}
 
         } finally {
 

@@ -24,7 +24,7 @@ public abstract class Scenario {
 		this.switchConditionList = SwitchConditionList;
 	}
 
-	public void capture(){
+	public void capture() throws InterruptedException{
 
 		// 区間計測の開始
 		SectionRunActual.getInstance().start();
@@ -32,7 +32,8 @@ public abstract class Scenario {
 		Sound.beep();
 		while(true){
 			travelList.get(sectionNo).travel();
-
+			//Delay.msDelay(10);
+			Thread.sleep(6);
 			if(switchConditionList.get(sectionNo).notifyEndCondition()){
 				sectionNo++;
 				Sound.twoBeeps();

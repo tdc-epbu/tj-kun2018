@@ -38,7 +38,8 @@ public class DriveStrategyImpl implements DriveStrategy {
 
 			Thread.sleep(6);
 			scenario.capture();
-			Thread.sleep(8);
+			//Delay.msDelay(10);
+			Thread.sleep(6);
 
 		}
 
