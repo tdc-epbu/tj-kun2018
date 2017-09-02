@@ -55,19 +55,19 @@ public class DriveStrategyImpl implements DriveStrategy {
 
 			switch (section.getTravelType()) {
 			case PID:
-				travel.travel(section.getWheelspeed());
+				travel.travel(section.getWheelspeed(),section.getTail());
 				break;
 			case JAGGY:
-				jaggy.travel(section.getWheelspeed());
+				jaggy.travel(section.getWheelspeed(),section.getTail());
 				break;
 			case SPIN:
-				spin.travel(section.getWheelspeed());
+				spin.travel(section.getWheelspeed(),section.getTail());
 				break;
 			case BALANCE:
-				balance.travel(section.getWheelspeed());
+				balance.travel(section.getWheelspeed(),section.getTail());
 				break;
 			case DIRECT:
-				direct.travel(section.getWheelspeed());
+				direct.travel(section.getWheelspeed(),section.getTail());
 				break;
 			default:
 			}

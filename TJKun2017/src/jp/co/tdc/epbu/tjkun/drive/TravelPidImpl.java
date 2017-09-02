@@ -42,10 +42,9 @@ public class TravelPidImpl implements Travel {
 
 
 
-	public void travel(WheelSpeed speed) {
+	public void travel(WheelSpeed speed,int tail) {
 		float forward = speed.getWheelSpeedScaleLeft();
 		float turn = CalcTurnValue(getBrightnessValue());
-		int tail = 0;
 
 		ev3.controlBalance(forward, turn ,tail);
 	}

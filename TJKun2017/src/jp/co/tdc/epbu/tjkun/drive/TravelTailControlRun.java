@@ -17,7 +17,7 @@ public class TravelTailControlRun implements Travel {
 
 	}
 
-	public void travel(WheelSpeed speed) {
+	public void travel(WheelSpeed speed,int tail) {
 		float forward = speed.getWheelSpeedScaleLeft();
 		float turn = jaggyTravel();
 		ev3.controlBalance(forward, turn, tail);

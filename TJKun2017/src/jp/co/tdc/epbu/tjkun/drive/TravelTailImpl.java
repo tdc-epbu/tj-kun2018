@@ -15,7 +15,7 @@ public class TravelTailImpl implements Travel {
 		this.calibrater = calibrater;
 		this.tail = tail;
 	}
-	
+
 	public float getBrightnessValue() {
 
 		float temp = ev3.getBrightness();
@@ -26,11 +26,11 @@ public class TravelTailImpl implements Travel {
 				* 100.0f);
 	}
 
-	public void travel(WheelSpeed speed) {
-//		
+	public void travel(WheelSpeed speed,int tail) {
+//
 //		int left;
 //		int right;
-//		
+//
 //		if (getBrightnessValue() > 80) {
 //			left = speed.getWheelSpeedScaleLeft();
 //			right = speed.getWheelSpeedScaleRight();
@@ -40,7 +40,7 @@ public class TravelTailImpl implements Travel {
 //		}
 		int left = speed.getWheelSpeedScaleLeft();
 		int right = speed.getWheelSpeedScaleRight();
-		
+
 		ev3.controlDirect(left, right, tail) ;
 	}
 
