@@ -20,7 +20,6 @@ public class SectionRunActual {
 		switch (condition.getConditionType()){
 		case DISTANCE:
 			// 回転数
-
 			int motorCount = Math.abs(ev3Control.getLMotorCount() - initMotorCount);
 			if (condition.getConditionValue() <= motorCount) {
 				notify = true;
@@ -33,18 +32,42 @@ public class SectionRunActual {
 			}
 			break;
 		case OBSTACLES_DETECTION:
-			// 未実装
-			if (ev3Control.getSonarDistance() < 0.1) { // 閾値は仮設定
+			// 障害物検知
+			if (condition.getConditionValue() < ev3Control.getSonarDistance()) {
 				return true;
 			}
 			break;
 		case TAIL_ANGLE:
+			// しっぽ角度
 			if (condition.getConditionValue() >= ev3Control.getTailAngle()) {
 				return true;
 			}
 			break;
+		case BLACK_DETECTION:
+			// 黒色検知
+			if (condition.getConditionValue() >=  ev3Control.getBrightness()) {
+				return true;
+			}
+			break;
+		case GRAY_DETECTION:
+			// 灰色検知
+			int grayCount = 0;
+			if (condition.getConditionValue() <= ev3Control.getBrightness()) {
+				grayCount++;
+			} else {
+			grayCount = 0;
+			}
+			if (grayCount > 4){
+				return true;
+			}
+			break;
+		case CONFLICT_DETECTION:
+			// 衝突検知
+			if (condition.getConditionValue() <= ev3Control.getGyroValue()) {
+				notify = true;
+			}
+			break;
 		}
-
 		return notify;
 	}
 	public void start(){
