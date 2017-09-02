@@ -18,6 +18,7 @@ import jp.co.tdc.epbu.tjkun.measure.ElapsedTime;
 import jp.co.tdc.epbu.tjkun.measure.GrayLineDetection;
 import jp.co.tdc.epbu.tjkun.measure.LeftMoterDetection;
 import jp.co.tdc.epbu.tjkun.measure.ObstaclesDetection;
+import jp.co.tdc.epbu.tjkun.measure.RightMoterDetection;
 import jp.co.tdc.epbu.tjkun.measure.TailDetection;
 import jp.co.tdc.epbu.tjkun.measure.VibrationDetection;
 import jp.co.tdc.epbu.tjkun.section.Area;
@@ -176,8 +177,11 @@ public class StoryFactory {
 		case TIME:
 			detection = new ElapsedTime((int) condition.getConditionValue());
 			break;
-		case DISTANCE:
+		case LEFT_DISTANCE:
 			detection = new LeftMoterDetection((int) condition.getConditionValue());
+			break;
+		case RIGHT_DISTANCE:
+			detection = new RightMoterDetection((int) condition.getConditionValue());
 			break;
 		case COLLISION_DETECTION:
 			detection = new VibrationDetection((int) condition.getConditionValue());

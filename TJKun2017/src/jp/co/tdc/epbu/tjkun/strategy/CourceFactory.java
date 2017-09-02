@@ -58,7 +58,7 @@ public class CourceFactory {
 
 		//              createSection(actType, lSpeed, rSpeed, tail, endCon, endVal, excepCon, excepVal);
 		sectionList.add(createSection(TravelType.PID, 10, 10, 95, ConditionType.TIME, 500, null, 0));
-		sectionList.add(createSection(TravelType.PID, 20, 20, 0, ConditionType.DISTANCE, 15200, null, 0));
+		sectionList.add(createSection(TravelType.PID, 20, 20, 0, ConditionType.LEFT_DISTANCE, 15200, null, 0));
 
 		areaList.add(new Area(sectionList, AreaType.TO_GOAL));
 		return areaList;
@@ -82,13 +82,31 @@ public class CourceFactory {
 		return new Section(action, endCondition, abnormalCondition);
 	}
 
+	private static Section createSection(TravelType actType, int lSpeed, int rSpeed, int tail,
+			ConditionType endCon, float endVal, ConditionType excepCon, float excepVal, int turn) {
+
+		Action action = new Action();
+		action.setTravelType(actType);
+		action.setSpeed(new WheelSpeed(lSpeed, rSpeed, turn));
+		action.setTailAngle(tail);
+
+		Condition endCondition = new Condition(endCon, endVal);
+
+		Condition abnormalCondition = null;
+		if (null != excepCon) {
+			abnormalCondition = new Condition(excepCon, excepVal);
+		}
+
+		return new Section(action, endCondition, abnormalCondition);
+	}
+
 	private static List<Area> createStart() {
 
 		List<Section> sectionList = new ArrayList<>();
 
 		//              createSection(actType, lSpeed, rSpeed, tail, endCon, endVal, excepCon, excepVal);
 		sectionList.add(createSection(TravelType.PID, 10, 10, 95, ConditionType.TIME, 1000, null, 0));
-		sectionList.add(createSection(TravelType.PID, 50, 50, 88, ConditionType.DISTANCE, 200, null, 0));
+		sectionList.add(createSection(TravelType.PID, 50, 50, 88, ConditionType.LEFT_DISTANCE, 200, null, 0));
 
 		List<Area> areaList  = new ArrayList<>();
 		areaList.add(new Area(sectionList, AreaType.TO_GOAL));
@@ -101,23 +119,23 @@ public class CourceFactory {
 
 		//              createSection(actType, lSpeed, rSpeed, tail, endCon, endVal, excepCon, excepVal);
 		// ストレート
-		sectionList.add(createSection(TravelType.PID, 120, 120, 0, ConditionType.DISTANCE, 2900, null, 0));
+		sectionList.add(createSection(TravelType.PID, 120, 120, 0, ConditionType.LEFT_DISTANCE, 2900, null, 0));
 		// 急なカーブ
-		sectionList.add(createSection(TravelType.PID, 80, 80, 0, ConditionType.DISTANCE, 2000, null, 0));
+		sectionList.add(createSection(TravelType.PID, 80, 80, 0, ConditionType.LEFT_DISTANCE, 2000, null, 0));
 		// ほぼストレート
-		sectionList.add(createSection(TravelType.PID, 100, 100, 0, ConditionType.DISTANCE, 1800, null, 0));
+		sectionList.add(createSection(TravelType.PID, 100, 100, 0, ConditionType.LEFT_DISTANCE, 1800, null, 0));
 		// 急なカーブ
-		sectionList.add(createSection(TravelType.PID, 60, 60, 0, ConditionType.DISTANCE, 700, null, 0));
+		sectionList.add(createSection(TravelType.PID, 60, 60, 0, ConditionType.LEFT_DISTANCE, 700, null, 0));
 		// ストレート
-		sectionList.add(createSection(TravelType.PID, 100, 100, 0, ConditionType.DISTANCE, 1800, null, 0));
+		sectionList.add(createSection(TravelType.PID, 100, 100, 0, ConditionType.LEFT_DISTANCE, 1800, null, 0));
 		// 急なカーブ
-		sectionList.add(createSection(TravelType.PID, 70, 70, 0, ConditionType.DISTANCE, 2000, null, 0));
+		sectionList.add(createSection(TravelType.PID, 70, 70, 0, ConditionType.LEFT_DISTANCE, 2000, null, 0));
 		// ストレート
-		sectionList.add(createSection(TravelType.PID, 100, 100, 0, ConditionType.DISTANCE, 2700, null, 0));
+		sectionList.add(createSection(TravelType.PID, 100, 100, 0, ConditionType.LEFT_DISTANCE, 2700, null, 0));
 		// 急なカーブ
-		sectionList.add(createSection(TravelType.PID, 30, 30, 0, ConditionType.DISTANCE, 2500, null, 0));
+		sectionList.add(createSection(TravelType.PID, 30, 30, 0, ConditionType.LEFT_DISTANCE, 2500, null, 0));
 		// 急なカーブ
-		sectionList.add(createSection(TravelType.JAGGY, 20, 20, 0, ConditionType.DISTANCE, 2500, null, 0));
+		sectionList.add(createSection(TravelType.JAGGY, 20, 20, 0, ConditionType.LEFT_DISTANCE, 2500, null, 0));
 
 		List<Area> areaList  = new ArrayList<>();
 		areaList.add(new Area(sectionList, AreaType.TO_GOAL));
@@ -132,17 +150,17 @@ public class CourceFactory {
 		// 衝突検知
 		sectionList.add(createSection(TravelType.PID, 10, 10, 0, ConditionType.COLLISION_DETECTION, 0.1f, null, 0));
 		// 後退
-		sectionList.add(createSection(TravelType.PID, -10, -10, 0, ConditionType.DISTANCE, 100, null, 0));
+		sectionList.add(createSection(TravelType.PID, -10, -10, 0, ConditionType.LEFT_DISTANCE, 100, null, 0));
 		// 1段目昇段
-		sectionList.add(createSection(TravelType.PID, 80, 80, 0, ConditionType.DISTANCE, 150, null, 0));
+		sectionList.add(createSection(TravelType.PID, 80, 80, 0, ConditionType.LEFT_DISTANCE, 150, null, 0));
 		// 衝突検知
 		sectionList.add(createSection(TravelType.PID, 10, 10, 0, ConditionType.COLLISION_DETECTION, 0.1f, null, 0));
 		// 後退
-		sectionList.add(createSection(TravelType.PID, -10, -10, 0, ConditionType.DISTANCE, 50, null, 0));
+		sectionList.add(createSection(TravelType.PID, -10, -10, 0, ConditionType.LEFT_DISTANCE, 50, null, 0));
 		// スピン
-		sectionList.add(createSection(TravelType.SPIN, 40, 0, 0, ConditionType.DISTANCE, 50, null, 0));
+		sectionList.add(createSection(TravelType.SPIN, 40, 0, 0, ConditionType.LEFT_DISTANCE, 50, null, 0));
 		// 2段目昇段
-		sectionList.add(createSection(TravelType.PID, 80, 80, 0, ConditionType.DISTANCE, 150, null, 0));
+		sectionList.add(createSection(TravelType.PID, 80, 80, 0, ConditionType.LEFT_DISTANCE, 150, null, 0));
 		// 直角攻略
 		sectionList.add(createSection(TravelType.JAGGY, 10, 10, 0, ConditionType.COLLISION_DETECTION, 0.1f, null, 0));
 
@@ -182,17 +200,17 @@ public class CourceFactory {
 
 		//              createSection(actType, lSpeed, rSpeed, tail, endCon, endVal, excepCon, excepVal);
 		// ストレート
-		sectionList.add(createSection(TravelType.PID, 120, 120, 0, ConditionType.DISTANCE, 2900, null, 0));
+		sectionList.add(createSection(TravelType.PID, 120, 120, 0, ConditionType.LEFT_DISTANCE, 2900, null, 0));
 		// 緩いカーブ
-		sectionList.add(createSection(TravelType.PID, 90, 90, 0, ConditionType.DISTANCE, 4800, null, 0));
+		sectionList.add(createSection(TravelType.PID, 90, 90, 0, ConditionType.LEFT_DISTANCE, 4800, null, 0));
 		// 急なカーブ
-		sectionList.add(createSection(TravelType.PID, 80, 80, 0, ConditionType.DISTANCE, 2000, null, 0));
+		sectionList.add(createSection(TravelType.PID, 80, 80, 0, ConditionType.LEFT_DISTANCE, 2000, null, 0));
 		// 緩いカーブ
-		sectionList.add(createSection(TravelType.PID, 90, 90, 0, ConditionType.DISTANCE, 400, null, 0));
+		sectionList.add(createSection(TravelType.PID, 90, 90, 0, ConditionType.LEFT_DISTANCE, 400, null, 0));
 		// ストレート
-		sectionList.add(createSection(TravelType.PID, 120, 120, 0, ConditionType.DISTANCE, 2800, null, 0));
+		sectionList.add(createSection(TravelType.PID, 120, 120, 0, ConditionType.LEFT_DISTANCE, 2800, null, 0));
 		// 急なカーブ
-		sectionList.add(createSection(TravelType.PID, 30, 30, 0, ConditionType.DISTANCE, 2000, null, 0));
+		sectionList.add(createSection(TravelType.PID, 30, 30, 0, ConditionType.LEFT_DISTANCE, 2000, null, 0));
 
 		List<Area> areaList  = new ArrayList<>();
 		areaList.add(new Area(sectionList, AreaType.TO_GOAL));
@@ -215,13 +233,13 @@ public class CourceFactory {
 		sectionList.add(createSection(TravelType.DIRECT, 0, 0, 75, ConditionType.TAIL_ANGLE, 0, null, 0));
 		sectionList.add(createSection(TravelType.DIRECT, 0, 0, 73, ConditionType.TAIL_ANGLE, 0, null, 0));
 		// 前進
-		sectionList.add(createSection(TravelType.DIRECT, 20, 20, 0, ConditionType.DISTANCE, 350, null, 0));
+		sectionList.add(createSection(TravelType.DIRECT, 20, 20, 0, ConditionType.LEFT_DISTANCE, 350, null, 0));
 		// 後退
-		sectionList.add(createSection(TravelType.DIRECT, -20, -21, 0, ConditionType.DISTANCE, 480, null, 0));
+		sectionList.add(createSection(TravelType.DIRECT, -20, -21, 0, ConditionType.LEFT_DISTANCE, 480, null, 0));
 		// 前進(車庫まで)
-		sectionList.add(createSection(TravelType.DIRECT, 20, 20, 0, ConditionType.DISTANCE, 1300, null, 0));
+		sectionList.add(createSection(TravelType.DIRECT, 20, 20, 0, ConditionType.LEFT_DISTANCE, 1300, null, 0));
 		// ストップ
-		sectionList.add(createSection(TravelType.DIRECT, 0, 0, 0, ConditionType.DISTANCE, 6000, null, 0));
+		sectionList.add(createSection(TravelType.DIRECT, 0, 0, 0, ConditionType.LEFT_DISTANCE, 6000, null, 0));
 		sectionList.add(createSection(TravelType.DIRECT, 0, 0, 0, ConditionType.TIME, 5000, null, 0));
 
 		List<Area> areaList  = new ArrayList<>();

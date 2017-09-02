@@ -20,8 +20,10 @@ public enum ConditionType {
 	COLLISION_DETECTION,
 
 	// 実績
-	/** 回転数 */
-	DISTANCE,
+	/** 左回転数 */
+	LEFT_DISTANCE,
+	/** 左回転数 */
+	RIGHT_DISTANCE,
 	/** 経過時間(ミリ秒) */
 	TIME,
 	/** しっぽ角度*/
