@@ -11,8 +11,8 @@ public enum TravelType {
 
 	PID,
 	JAGGY,
-	TAIL,
-	TAILDOWN,
-	TAILCONTROL,
+	SPIN,
+	BALANCE,
+	DIRECT,
 	END;
 }
