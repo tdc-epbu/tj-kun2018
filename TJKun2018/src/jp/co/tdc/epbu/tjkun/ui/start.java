@@ -78,7 +78,7 @@ public class start implements Runnable {
 			// 尻尾を停止位置へ固定しスタート準備
 			while (button.touchStatus() != TouchStatus.Released
 					&& !RemoteTask.getInstance().checkRemoteCommand(RemoteTask.REMOTE_COMMAND_START)) {
-				ev3.controlDirect(0, 0, 97);
+				ev3.controlDirect(0, 0, 90);
 				Delay.msDelay(10);
 			}
 
