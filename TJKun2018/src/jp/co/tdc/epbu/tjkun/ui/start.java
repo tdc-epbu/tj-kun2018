@@ -61,7 +61,7 @@ public class start implements Runnable {
 
 			driveStrategy = new DriveStrategyImpl(calibrater);
 
-			cource = CourceFactory.create(CourceType.RIGHT2017);
+			cource = CourceFactory.create(CourceType.RIGHT);
 
 			// PIDDriver pidDriver = new PIDDriver(ev3, calibrater);
 
@@ -78,7 +78,7 @@ public class start implements Runnable {
 			// 尻尾を停止位置へ固定しスタート準備
 			while (button.touchStatus() != TouchStatus.Released
 					&& !RemoteTask.getInstance().checkRemoteCommand(RemoteTask.REMOTE_COMMAND_START)) {
-				ev3.controlDirect(0, 0, 93);
+				ev3.controlDirect(0, 0, 90);
 				Delay.msDelay(10);
 			}
 

@@ -33,8 +33,12 @@ public class SectionRunActual {
 			}
 			break;
 		case OBSTACLES_DETECTION:
-			// 未実装
-			if (ev3Control.getSonarDistance() < 0.1) { // 閾値は仮設定
+			if (condition.getConditionValue() > ev3Control.getSonarDistance()) {
+				return true;
+			}
+			break;
+		case NOT_OBSTACLES_DETECTION:
+			if (condition.getConditionValue() < ev3Control.getSonarDistance()) {
 				return true;
 			}
 			break;
